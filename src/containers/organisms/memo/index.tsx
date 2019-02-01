@@ -12,9 +12,20 @@ interface Props {
 const MemoOrg: FunctionComponent<Props> = ({ dispatch }) => {
   return (
     <MemoOrgView
-      save={e =>
-        doPost({ title: e.title, text: e.text, offline: true }, dispatch)
-      }
+      save={e => {
+        if (e.text.length > 0) {
+          doPost(
+            {
+              title: e.title,
+              text: e.text,
+              offline: true,
+              tag: [],
+              id: Math.random().toString()
+            },
+            dispatch
+          );
+        }
+      }}
     />
   );
 };

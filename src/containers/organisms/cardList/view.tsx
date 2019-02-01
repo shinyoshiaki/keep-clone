@@ -4,9 +4,13 @@ import Masonry from "react-masonry-component";
 
 export interface CardListProps {
   cards: Card[];
+  onRemove: (id: string) => void;
 }
 
-const CardListView: FunctionComponent<CardListProps> = ({ cards }) => {
+const CardListView: FunctionComponent<CardListProps> = ({
+  cards,
+  onRemove
+}) => {
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
@@ -18,7 +22,7 @@ const CardListView: FunctionComponent<CardListProps> = ({ cards }) => {
           {cards.map((card, i) => (
             <div style={{ width: 280 }} key={i}>
               <div style={{ padding: 10 }}>
-                <CardMol card={card} />
+                <CardMol card={card} onRemove={onRemove} />
               </div>
             </div>
           ))}
