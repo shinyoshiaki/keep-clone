@@ -1,28 +1,35 @@
 import React, { FunctionComponent } from "react";
 import { Typography } from "@material-ui/core";
 import useObject from "useobject";
-import EditMol from "../../../components/molecules/edit";
+import EditMol, { EditInput } from "../../../components/molecules/edit";
 
-const ThumbView: FunctionComponent<{ handle: () => void }> = ({ handle }) => (
-  <div
-    style={{ display: "flex", borderRadius: 5, boxShadow: "0 0 4px gray" }}
-    onClick={handle}
-  >
-    <Typography style={{ padding: 10 }}>{"メモを入力..."}</Typography>
-  </div>
-);
-
-const MemoOrg: FunctionComponent = () => {
+const MemoOrgView: FunctionComponent<{ save: (input: EditInput) => void }> = ({
+  save
+}) => {
   const { state, setState } = useObject({ open: false });
   return (
     <div>
       {state.open ? (
-        <EditMol onClose={() => setState({ open: false })} />
+        <EditMol
+          onClose={e => {
+            setState({ open: false });
+            save(e);
+          }}
+        />
       ) : (
-        <ThumbView handle={() => setState({ open: true })} />
+        <div
+          style={{
+            display: "flex",
+            borderRadius: 5,
+            boxShadow: "0 0 4px gray"
+          }}
+          onClick={() => setState({ open: true })}
+        >
+          <Typography style={{ padding: 10 }}>{"メモを入力..."}</Typography>
+        </div>
       )}
     </div>
   );
 };
 
-export default MemoOrg;
+export default MemoOrgView;

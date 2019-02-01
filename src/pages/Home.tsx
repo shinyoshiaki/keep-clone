@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 import HeaderMol from "../components/molecules/header";
-import MemoOrg from "../containers/organisms/memo/view";
+import MemoOrg from "../containers/organisms/memo";
+import CardListOrg from "../containers/organisms/cardList";
 
 const Home: FunctionComponent = () => {
   return (
@@ -17,6 +18,7 @@ const Home: FunctionComponent = () => {
           <MemoOrg />
         </div>
       </div>
+      <CardListOrg />
     </div>
   );
 };

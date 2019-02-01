@@ -1,30 +1,31 @@
 import React, { FunctionComponent } from "react";
 import CardMol, { Card } from "../../../components/molecules/card";
+import Masonry from "react-masonry-component";
 
 export interface CardListProps {
   cards: Card[];
 }
 
-const CardListOrg: FunctionComponent<CardListProps> = ({ cards }) => {
+const CardListView: FunctionComponent<CardListProps> = ({ cards }) => {
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
         style={{
-          width: "90vw",
-          display: "flex",
-          flexWrap: "wrap"
+          width: "90vw"
         }}
       >
-        {cards.map(card => (
-          <div style={{ width: "30vw" }}>
-            <div style={{ padding: 10 }}>
-              <CardMol card={card} />
+        <Masonry options={{}}>
+          {cards.map((card, i) => (
+            <div style={{ width: 280 }} key={i}>
+              <div style={{ padding: 10 }}>
+                <CardMol card={card} />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </Masonry>
       </div>
     </div>
   );
 };
 
-export default CardListOrg;
+export default CardListView;
