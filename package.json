@@ -1,7 +1,8 @@
 {
   "name": "keep",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@emotion/core": "^10.0.6",
     "@material-ui/core": "^3.9.1",

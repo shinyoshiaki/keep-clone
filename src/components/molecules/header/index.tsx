@@ -13,11 +13,6 @@ const HeaderMol: FunctionComponent = () => {
   return (
     <div>
       <AppBar position="static">
-        <MeasureWrap
-          target={(a, b) => {
-            console.log(a, b);
-          }}
-        />
         <Toolbar>
           <IconButton color="inherit">
             <Menu />
