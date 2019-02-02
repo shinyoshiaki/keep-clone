@@ -21,7 +21,8 @@ const CardMol: FunctionComponent<{
         borderRadius: 5,
         boxShadow: "0 0 1px gray",
         padding: 5,
-        minHeight: 120
+        paddingLeft: 20,
+        minHeight: 120 + 50
       }}
       onMouseEnter={() => setState({ open: true })}
       onMouseLeave={() => setState({ open: false })}
@@ -29,8 +30,8 @@ const CardMol: FunctionComponent<{
       <div
         style={{
           display: "grid",
-          gridTemplateRows: "70% 1fr",
-          gridTemplateColumns: "80% 1fr"
+          gridTemplateRows: "7fr 3fr",
+          gridTemplateColumns: "8fr 2fr"
         }}
       >
         <div style={{ gridRow: "1/2", gridColumn: "1/2" }}>
@@ -42,13 +43,14 @@ const CardMol: FunctionComponent<{
             gridRow: "1/2",
             gridColumn: "2/3",
             display: "flex",
-            justifyContent: "flex-end",
-            opacity: state.open ? 1 : 0
+            justifyContent: "flex-end"
           }}
         >
-          <IconButton style={{ width: 50, height: 50 }}>
-            <Star />
-          </IconButton>
+          {state.open && (
+            <IconButton style={{ width: 50, height: 50 }}>
+              <Star />
+            </IconButton>
+          )}
         </div>
         <div
           style={{
@@ -56,22 +58,26 @@ const CardMol: FunctionComponent<{
             gridColumn: "1/3",
             display: "flex",
             justifyContent: "flex-end",
-            opacity: state.open ? 1 : 0,
+
             marginTop: "auto"
           }}
         >
-          <IconButton
-            style={{ width: 50, height: 50 }}
-            onClick={() => onRemove(card.id)}
-          >
-            <Delete />
-          </IconButton>
-          <IconButton style={{ width: 50, height: 50 }}>
-            <More />
-          </IconButton>
-          <IconButton style={{ width: 50, height: 50 }}>
-            <MoreVert />
-          </IconButton>
+          {state.open && (
+            <div>
+              <IconButton
+                style={{ width: 50, height: 50 }}
+                onClick={() => onRemove(card.id)}
+              >
+                <Delete />
+              </IconButton>
+              <IconButton style={{ width: 50, height: 50 }}>
+                <More />
+              </IconButton>
+              <IconButton style={{ width: 50, height: 50 }}>
+                <MoreVert />
+              </IconButton>
+            </div>
+          )}
         </div>
       </div>
     </div>

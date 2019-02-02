@@ -6,7 +6,7 @@ import CardListOrg from "../containers/organisms/cardList";
 const Home: FunctionComponent = () => {
   return (
     <div style={{ height: "100vh" }}>
-      <HeaderMol />
+      <HeaderMol enterSearch={() => {}} />
       <div
         style={{
           display: "flex",
@@ -14,7 +14,7 @@ const Home: FunctionComponent = () => {
           alignItems: "center"
         }}
       >
-        <div style={{ padding: 30, width: 600, maxWidth: "50vw" }}>
+        <div style={{ padding: 30, width: 600, maxWidth: "90vw" }}>
           <MemoOrg />
         </div>
       </div>

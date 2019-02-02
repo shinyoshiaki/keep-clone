@@ -13,21 +13,15 @@ const CardListView: FunctionComponent<CardListProps> = ({
 }) => {
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <div
-        style={{
-          width: "90vw"
-        }}
-      >
-        <Masonry options={{}}>
-          {cards.map((card, i) => (
-            <div style={{ width: 280 }} key={i}>
-              <div style={{ padding: 10 }}>
-                <CardMol card={card} onRemove={onRemove} />
-              </div>
+      <Masonry options={{ fitWidth: true, columnWidth: 240 }}>
+        {cards.map((card, i) => (
+          <div style={{ width: 240, maxWidth: "90vw" }} key={i}>
+            <div style={{ padding: 10 }}>
+              <CardMol card={card} onRemove={onRemove} />
             </div>
-          ))}
-        </Masonry>
-      </div>
+          </div>
+        ))}
+      </Masonry>
     </div>
   );
 };
