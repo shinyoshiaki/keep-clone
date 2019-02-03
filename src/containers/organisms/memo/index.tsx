@@ -7,13 +7,18 @@ import { IconButton, Typography } from "@material-ui/core";
 import EditMol from "../../../components/molecules/edit";
 import useObject from "useobject";
 import { More } from "@material-ui/icons";
+import EditLabelMol from "../../../components/molecules/editLabel";
 
 interface Props {
   dispatch: Dispatch<any>;
 }
 
 const MemoOrg: FunctionComponent<Props> = ({ dispatch }) => {
-  const { state, setState } = useObject({ open: false });
+  const { state, setState } = useObject({
+    open: false,
+    editLabel: false,
+    tag: [] as string[]
+  });
   return (
     <div>
       {state.open ? (
@@ -33,11 +38,41 @@ const MemoOrg: FunctionComponent<Props> = ({ dispatch }) => {
               );
             }
           }}
+          initial={{ title: "", text: "", tag: state.tag }}
           menus={() => (
             <div>
-              <IconButton style={{ width: 50, height: 50 }}>
+              <IconButton
+                style={{ width: 50, height: 50 }}
+                onClick={() =>
+                  setState(prev => {
+                    return { editLabel: !prev.editLabel };
+                  })
+                }
+              >
                 <More />
               </IconButton>
+            </div>
+          )}
+          options={() => (
+            <div>
+              {state.editLabel && (
+                <EditLabelMol
+                  tagList={["test"]}
+                  selected={v =>
+                    setState(prev => {
+                      return { tag: prev.tag.concat(v) };
+                    })
+                  }
+                  unSelected={v =>
+                    setState(prev => {
+                      const next = prev.tag.filter(label => {
+                        if (label !== v) return label;
+                      });
+                      return { tag: next };
+                    })
+                  }
+                />
+              )}
             </div>
           )}
         />

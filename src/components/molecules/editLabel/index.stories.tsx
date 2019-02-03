@@ -5,6 +5,6 @@ import Component from ".";
 
 storiesOf("molecules", module).add("editLabel", () => (
   <div style={{ height: "100vh" }}>
-    <Component tagList={["1", "2"]} />
+    <Component tagList={["1", "2"]} selected={action("story")} />
   </div>
 ));

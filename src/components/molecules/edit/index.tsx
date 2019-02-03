@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect } from "react";
 import { InputBase, Button, IconButton } from "@material-ui/core";
 import useObject from "useobject";
 import { Star } from "@material-ui/icons";
+import TagLabelAtom from "../../atoms/tagLabel";
 
 export interface EditInput {
   title: string;
@@ -10,15 +11,21 @@ export interface EditInput {
 
 const EditMol: FunctionComponent<{
   onClose: (input: EditInput) => void;
-  menus: () => any;
-  initial?: { title: string; text: string };
-}> = ({ onClose, menus, initial }) => {
-  const { state, setState } = useObject({ title: "", text: "" });
+  menus?: () => any;
+  options?: () => any;
+  initial?: { title: string; text: string; tag: string[] };
+}> = ({ onClose, menus, initial, options }) => {
+  const { state, setState } = useObject({
+    title: "",
+    text: "",
+    tag: [] as string[]
+  });
 
   useEffect(() => {
+    console.log(initial);
     if (initial) {
-      const { title, text } = initial;
-      setState({ title, text });
+      const { title, text, tag } = initial;
+      setState({ title, text, tag });
     }
   }, [initial]);
 
@@ -29,8 +36,8 @@ const EditMol: FunctionComponent<{
         boxShadow: "0 0 4px gray",
         display: "grid",
         gridTemplateColumns: "1.6fr 0.2fr",
-        gridTemplateRows: "1fr 2fr 1fr",
-        gridTemplateAreas: `"title star" "text ." "menu close"`
+        gridTemplateRows: "auto auto auto auto auto",
+        gridTemplateAreas: `"title star" "text text" "tag tag" "menu close" "option option"`
       }}
     >
       <div style={{ gridArea: "title" }}>
@@ -71,15 +78,12 @@ const EditMol: FunctionComponent<{
           value={state.text}
         />
       </div>
-      <div
-        style={{
-          gridArea: "menu",
-          paddingLeft: 10,
-          display: "flex"
-        }}
-      >
-        {menus()}
+      <div style={{ gridArea: "tag" }}>
+        {state.tag.map(label => (
+          <TagLabelAtom label={label} key={label} />
+        ))}
       </div>
+      <div style={{ gridArea: "menu" }}>{menus && menus()}</div>
       <div style={{ gridArea: "close" }}>
         <Button
           onClick={() => {
@@ -90,6 +94,7 @@ const EditMol: FunctionComponent<{
           close
         </Button>
       </div>
+      <div style={{ gridArea: "option" }}>{options && options()}</div>
     </div>
   );
 };

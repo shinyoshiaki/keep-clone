@@ -31,7 +31,7 @@ const CardMol: FunctionComponent<{
           const { title, text } = v;
           onChange({ title, text, id, tag: [] });
         }}
-        initial={{ title, text }}
+        initial={{ title, text, tag }}
       />
       <div
         style={{

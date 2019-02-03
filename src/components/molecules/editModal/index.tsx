@@ -6,7 +6,7 @@ const EditModalMol: FunctionComponent<{
   open: boolean;
   onClose: () => void;
   onChange: (v: { title: string; text: string }) => void;
-  initial: { title: string; text: string };
+  initial: { title: string; text: string; tag: string[] };
 }> = ({ open, onClose, initial, onChange }) => {
   return (
     <Modal
