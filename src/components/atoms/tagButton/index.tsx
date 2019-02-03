@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Label } from "@material-ui/icons";
 
-const TagLabelAtom: FunctionComponent<{
+const TagButtonAtom: FunctionComponent<{
   label: string;
   onClick: (v: string) => void;
 }> = ({ label, onClick }) => {
@@ -18,4 +18,4 @@ const TagLabelAtom: FunctionComponent<{
   );
 };
 
-export default TagLabelAtom;
+export default TagButtonAtom;

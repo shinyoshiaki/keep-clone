@@ -1,10 +1,10 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import Component from "./view";
 import { action } from "@storybook/addon-actions";
+import Component from ".";
 
-storiesOf("organisms", module).add("memo", () => (
+storiesOf("molecules", module).add("editLabel", () => (
   <div style={{ height: "100vh" }}>
-    <Component save={action("story")} />
+    <Component tagList={["1", "2"]} />
   </div>
 ));

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Typography } from "@material-ui/core";
-import TagLabelAtom from "../../atoms/taglabel";
 import { Edit } from "@material-ui/icons";
+import TagButtonAtom from "../../atoms/tagButton";
 
 const LabelListMol: FunctionComponent<{
   labels: string[];
@@ -11,7 +11,7 @@ const LabelListMol: FunctionComponent<{
     <div style={{ width: 270 }}>
       <Typography style={{ padding: 10 }}>label</Typography>
       {labels.map((label, i) => (
-        <TagLabelAtom label={label} onClick={onClick} key={i} />
+        <TagButtonAtom label={label} onClick={onClick} key={i} />
       ))}
       <div style={{ display: "flex", padding: 10 }}>
         <Edit

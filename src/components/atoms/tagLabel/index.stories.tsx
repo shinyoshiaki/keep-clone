@@ -5,6 +5,7 @@ import { action } from "@storybook/addon-actions";
 
 storiesOf("atoms", module).add("tagLabel", () => (
   <div style={{ height: "100vh" }}>
-    <Component label={"label"} onClick={action("story")} />
+    <Component label={"label"} />
+    <Component label={"labelaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"} />
   </div>
 ));

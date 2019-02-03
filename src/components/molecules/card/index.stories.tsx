@@ -9,7 +9,8 @@ storiesOf("molecules", module).add("card", () => (
       card={{
         id: Math.random().toString(),
         title: "title",
-        text: "text"
+        text: "text",
+        tag: ["some", "test"]
       }}
       onRemove={action("story")}
       onChange={action("story")}
