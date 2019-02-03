@@ -7,7 +7,8 @@ const EditModalMol: FunctionComponent<{
   onChange: (v: EditInput) => void;
   allTag: string[];
   initial: { title: string; text: string; tag: string[] };
-}> = ({ open, initial, onChange, allTag }) => {
+  menus: () => any;
+}> = ({ open, initial, onChange, allTag, menus }) => {
   return (
     <Modal open={open}>
       <div
@@ -25,6 +26,7 @@ const EditModalMol: FunctionComponent<{
             }}
             initial={initial}
             allTag={allTag}
+            menus={menus}
           />
         </div>
       </div>

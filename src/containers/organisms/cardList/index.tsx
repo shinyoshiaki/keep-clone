@@ -6,7 +6,8 @@ import { Dispatch } from "redux";
 import Masonry from "react-masonry-component";
 import CardMol from "../../../components/molecules/card";
 import EditModalMol from "../../../components/molecules/editModal";
-import useObject from "useobject";
+import { IconButton } from "@material-ui/core";
+import { Delete } from "@material-ui/icons";
 
 interface Props extends State {
   dispatch: Dispatch<any>;
@@ -32,7 +33,7 @@ const CardListOrg: FunctionComponent<Props> = ({
                 <div style={{ padding: 10 }}>
                   <CardMol
                     card={card}
-                    onRemove={id => doRemove(id, dispatch)}
+                    onRemove={() => doRemove(card.id, dispatch)}
                     modal={(open, close, card) => {
                       const { title, text, id, tag } = card;
                       return (
@@ -48,6 +49,18 @@ const CardListOrg: FunctionComponent<Props> = ({
                           }}
                           initial={{ title, text, tag }}
                           allTag={allTag}
+                          menus={() => (
+                            <div>
+                              <IconButton
+                                onClick={() => {
+                                  doRemove(card.id, dispatch);
+                                  close();
+                                }}
+                              >
+                                <Delete />
+                              </IconButton>
+                            </div>
+                          )}
                         />
                       );
                     }}

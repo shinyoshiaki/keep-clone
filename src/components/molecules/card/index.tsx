@@ -15,7 +15,7 @@ const display = (open: boolean) => (open ? "" : "none");
 
 const CardMol: FunctionComponent<{
   card: Card;
-  onRemove: (id: string) => void;
+  onRemove: () => void;
   modal: (open: boolean, close: () => void, card: Card) => any;
 }> = ({ card, onRemove, modal }) => {
   const { state, setState } = useObject({ open: false, modal: false });
@@ -85,7 +85,7 @@ const CardMol: FunctionComponent<{
             }}
           >
             <div style={{ display: display(state.open) }}>
-              <IconButton style={{ width: 50 }} onClick={() => onRemove(id)}>
+              <IconButton style={{ width: 50 }} onClick={() => onRemove()}>
                 <Delete />
               </IconButton>
               <IconButton style={{ width: 50 }}>

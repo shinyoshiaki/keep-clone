@@ -21,10 +21,9 @@ const initialState = {
 const EditMol: FunctionComponent<{
   onClose: (input: EditInput) => void;
   menus?: () => any;
-  options?: () => any;
   allTag: string[];
   initial?: { title: string; text: string; tag: string[] };
-}> = ({ onClose, menus, initial, options, allTag }) => {
+}> = ({ onClose, menus, initial, allTag }) => {
   const { state, setState } = useObject(initialState);
 
   useEffect(() => {
@@ -112,7 +111,7 @@ const EditMol: FunctionComponent<{
           close
         </Button>
       </div>
-      <div style={{ gridArea: "option" }}>
+      <div style={{ gridArea: "option", display: "flex" }}>
         {state.editLabel && (
           <EditLabelMol
             tagList={allTag}
@@ -131,7 +130,6 @@ const EditMol: FunctionComponent<{
             }
           />
         )}
-        {options && options()}
       </div>
     </div>
   );
