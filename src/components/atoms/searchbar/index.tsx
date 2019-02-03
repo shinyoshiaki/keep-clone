@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { Search } from "@material-ui/icons";
-import { InputBase } from "@material-ui/core";
+import { Search, Close } from "@material-ui/icons";
+import { InputBase, IconButton } from "@material-ui/core";
 import useObject from "useobject";
 
 const SearchBarAtom: FunctionComponent<{ onSubmit: (v: string) => void }> = ({
@@ -38,15 +38,17 @@ const SearchBarAtom: FunctionComponent<{ onSubmit: (v: string) => void }> = ({
           padding: 5,
           paddingLeft: 10
         }}
-        onChange={e => setState({ input: e.target.value })}
-        value={state.input}
-        onKeyPress={ev => {
-          if (ev.key === "Enter") {
-            onSubmit(state.input);
-            setState({ input: "" });
-          }
+        onChange={e => {
+          setState({ input: e.target.value });
+          onSubmit(e.target.value);
         }}
+        value={state.input}
       />
+      {state.input.length > 0 && (
+        <IconButton onClick={() => setState({ input: "" })}>
+          <Close />
+        </IconButton>
+      )}
     </div>
   );
 };

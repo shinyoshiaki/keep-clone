@@ -3,8 +3,9 @@ import HeaderMol from "../../../components/molecules/header";
 import LabelListMol from "../../../components/molecules/labelList";
 import { connect } from "react-redux";
 import { ReduxState } from "../../../modules/createStore";
-import { State, doSetViewTag } from "../../../modules/main";
+import { State } from "../../../modules/main";
 import { Dispatch } from "redux";
+import { doSetSearch, doSetViewTag } from "../../../modules/ui";
 
 interface Props extends State {
   dispatch: Dispatch<any>;
@@ -23,7 +24,9 @@ const LayoutOrg: FunctionComponent<Props> = ({ children, posts, dispatch }) => {
   return (
     <div style={{ minHeight: "95vh" }}>
       <HeaderMol
-        enterSearch={() => {}}
+        enterSearch={word => {
+          doSetSearch(word, dispatch);
+        }}
         drawer={close => (
           <LabelListMol
             labels={allTag}

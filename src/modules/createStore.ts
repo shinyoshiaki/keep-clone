@@ -7,9 +7,11 @@ import logger from "redux-logger";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import main, { State } from "./main";
+import ui, { StateUi } from "./ui";
 
 const rootReducer = combineReducers({
-  main
+  main,
+  ui
 });
 
 const persistConfig = {
@@ -27,4 +29,5 @@ export default function createStore() {
 
 export interface ReduxState {
   main: State;
+  ui: StateUi;
 }
