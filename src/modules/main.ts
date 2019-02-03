@@ -10,6 +10,7 @@ export interface Post {
 
 export interface State {
   posts: Post[];
+  viewTag?: string;
 }
 
 const initialState: State = { posts: [] };
@@ -17,7 +18,8 @@ const initialState: State = { posts: [] };
 enum ActionName {
   POST = "MAIN_POST",
   REMOVE = "MAIN_REMOVE",
-  CHANGE = "MAIN_CHANGE"
+  CHANGE = "MAIN_CHANGE",
+  SET_VIEWTAG = "MAIN_SET_VIEWTAG"
 }
 
 interface PostAction extends Action {
@@ -53,7 +55,19 @@ export const doChange = async (
   dispatch({ type: ActionName.CHANGE, payload: post });
 };
 
-type Actions = PostAction | RemoveAction | ChangeAction;
+interface SetViewTagAction extends Action {
+  type: ActionName.SET_VIEWTAG;
+  payload: string | undefined;
+}
+
+export const doSetViewTag = async (
+  tag: string | undefined,
+  dispatch: Dispatch<SetViewTagAction>
+) => {
+  dispatch({ type: ActionName.SET_VIEWTAG, payload: tag });
+};
+
+type Actions = PostAction | RemoveAction | ChangeAction | SetViewTagAction;
 
 export default function reducer(state = initialState, action: Actions) {
   switch (action.type) {
@@ -75,6 +89,9 @@ export default function reducer(state = initialState, action: Actions) {
         } else return post;
       });
       return { ...state, posts: next } as State;
+    }
+    case ActionName.SET_VIEWTAG: {
+      return { ...state, viewTag: action.payload } as State;
     }
     default:
       return state;

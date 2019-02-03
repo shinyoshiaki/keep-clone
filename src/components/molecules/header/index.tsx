@@ -12,7 +12,7 @@ import useObject from "useobject";
 
 const HeaderMol: FunctionComponent<{
   enterSearch: (v: string) => void;
-  drawer: () => any;
+  drawer: (close: () => void) => any;
 }> = ({ drawer, enterSearch }) => {
   const { state, setState } = useObject({ open: false });
   return (
@@ -29,7 +29,7 @@ const HeaderMol: FunctionComponent<{
         </Toolbar>
       </AppBar>
       <Drawer open={state.open} onClose={() => setState({ open: false })}>
-        {drawer()}
+        {drawer(() => setState({ open: false }))}
       </Drawer>
     </div>
   );

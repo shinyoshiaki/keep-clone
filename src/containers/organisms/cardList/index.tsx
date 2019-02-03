@@ -12,7 +12,11 @@ interface Props extends State {
   dispatch: Dispatch<any>;
 }
 
-const CardListOrg: FunctionComponent<Props> = ({ posts, dispatch }) => {
+const CardListOrg: FunctionComponent<Props> = ({
+  posts,
+  dispatch,
+  viewTag
+}) => {
   const allTag: string[] = posts.flatMap(post => {
     if (post.tag.length > 0) return post.tag;
     else return [] as string[];
@@ -21,34 +25,37 @@ const CardListOrg: FunctionComponent<Props> = ({ posts, dispatch }) => {
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <Masonry options={{ fitWidth: true, columnWidth: 350 }}>
-        {posts.map((card, i) => (
-          <div style={{ width: 350, maxWidth: "90vw" }} key={i}>
-            <div style={{ padding: 10 }}>
-              <CardMol
-                card={card}
-                onRemove={id => doRemove(id, dispatch)}
-                modal={(open, close, card) => {
-                  const { title, text, id, tag } = card;
-                  return (
-                    <EditModalMol
-                      open={open}
-                      onChange={v => {
-                        const { title, text, tag } = v;
-                        doChange(
-                          { id, title, text, tag, offline: true },
-                          dispatch
-                        );
-                        close();
-                      }}
-                      initial={{ title, text, tag }}
-                      allTag={allTag}
-                    />
-                  );
-                }}
-              />
-            </div>
-          </div>
-        ))}
+        {posts.map((card, i) => {
+          if (!viewTag || card.tag.includes(viewTag))
+            return (
+              <div style={{ width: 350, maxWidth: "90vw" }} key={i}>
+                <div style={{ padding: 10 }}>
+                  <CardMol
+                    card={card}
+                    onRemove={id => doRemove(id, dispatch)}
+                    modal={(open, close, card) => {
+                      const { title, text, id, tag } = card;
+                      return (
+                        <EditModalMol
+                          open={open}
+                          onChange={v => {
+                            const { title, text, tag } = v;
+                            doChange(
+                              { id, title, text, tag, offline: true },
+                              dispatch
+                            );
+                            close();
+                          }}
+                          initial={{ title, text, tag }}
+                          allTag={allTag}
+                        />
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+            );
+        })}
       </Masonry>
     </div>
   );

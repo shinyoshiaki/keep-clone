@@ -5,6 +5,10 @@ import { action } from "@storybook/addon-actions";
 
 storiesOf("molecules", module).add("labelList", () => (
   <div style={{ height: "100vh" }}>
-    <Component labels={["label", "label", "label"]} onClick={action("story")} />
+    <Component
+      labels={["label", "label", "label"]}
+      onClick={action("story")}
+      resetAll={action("")}
+    />
   </div>
 ));
