@@ -13,7 +13,7 @@ storiesOf("molecules", module).add("card", () => (
         tag: ["some", "test"]
       }}
       onRemove={action("story")}
-      onChange={action("story")}
+      modal={() => ""}
     />
   </div>
 ));

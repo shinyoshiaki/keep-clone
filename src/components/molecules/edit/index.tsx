@@ -1,28 +1,34 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { InputBase, Button, IconButton } from "@material-ui/core";
 import useObject from "useobject";
-import { Star } from "@material-ui/icons";
+import { Star, More } from "@material-ui/icons";
 import TagLabelAtom from "../../atoms/tagLabel";
+import EditLabelMol from "../editLabel";
 
 export interface EditInput {
   title: string;
   text: string;
+  tag: string[];
 }
+
+const initialState = {
+  title: "",
+  text: "",
+  tag: [] as string[],
+  editLabel: false
+};
 
 const EditMol: FunctionComponent<{
   onClose: (input: EditInput) => void;
   menus?: () => any;
   options?: () => any;
+  allTag: string[];
   initial?: { title: string; text: string; tag: string[] };
-}> = ({ onClose, menus, initial, options }) => {
-  const { state, setState } = useObject({
-    title: "",
-    text: "",
-    tag: [] as string[]
-  });
+}> = ({ onClose, menus, initial, options, allTag }) => {
+  const { state, setState } = useObject(initialState);
 
   useEffect(() => {
-    console.log(initial);
+    console.log({ initial });
     if (initial) {
       const { title, text, tag } = initial;
       setState({ title, text, tag });
@@ -83,18 +89,50 @@ const EditMol: FunctionComponent<{
           <TagLabelAtom label={label} key={label} />
         ))}
       </div>
-      <div style={{ gridArea: "menu" }}>{menus && menus()}</div>
+      <div style={{ gridArea: "menu", display: "flex" }}>
+        <IconButton
+          style={{ width: 50, height: 50 }}
+          onClick={() =>
+            setState(prev => {
+              return { editLabel: !prev.editLabel };
+            })
+          }
+        >
+          <More />
+        </IconButton>
+        {menus && menus()}
+      </div>
       <div style={{ gridArea: "close" }}>
         <Button
           onClick={() => {
             onClose(state);
-            setState({ title: "", text: "" });
+            setState(initialState);
           }}
         >
           close
         </Button>
       </div>
-      <div style={{ gridArea: "option" }}>{options && options()}</div>
+      <div style={{ gridArea: "option" }}>
+        {state.editLabel && (
+          <EditLabelMol
+            tagList={allTag}
+            selected={v =>
+              setState(prev => {
+                return { tag: prev.tag.concat(v) };
+              })
+            }
+            unSelected={v =>
+              setState(prev => {
+                const next = prev.tag.filter(label => {
+                  if (label !== v) return label;
+                });
+                return { tag: next };
+              })
+            }
+          />
+        )}
+        {options && options()}
+      </div>
     </div>
   );
 };

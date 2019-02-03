@@ -2,79 +2,44 @@ import React, { FunctionComponent } from "react";
 import { connect } from "react-redux";
 import { ReduxState } from "../../../modules/createStore";
 import { Dispatch } from "redux";
-import { doPost } from "../../../modules/main";
-import { IconButton, Typography } from "@material-ui/core";
+import { doPost, State } from "../../../modules/main";
+import { Typography } from "@material-ui/core";
 import EditMol from "../../../components/molecules/edit";
 import useObject from "useobject";
-import { More } from "@material-ui/icons";
-import EditLabelMol from "../../../components/molecules/editLabel";
 
-interface Props {
+interface Props extends State {
   dispatch: Dispatch<any>;
 }
 
-const MemoOrg: FunctionComponent<Props> = ({ dispatch }) => {
-  const { state, setState } = useObject({
-    open: false,
-    editLabel: false,
-    tag: [] as string[]
+const MemoOrg: FunctionComponent<Props> = ({ dispatch, posts }) => {
+  const { state, setState } = useObject({ open: false });
+  const allTag: string[] = posts.flatMap(post => {
+    if (post.tag.length > 0) return post.tag;
+    else return [] as string[];
   });
+
   return (
     <div>
       {state.open ? (
         <EditMol
           onClose={e => {
-            setState({ open: false });
-            if (e.text.length > 0) {
+            console.log("input", e);
+            if (e.text.length > 0 || e.title.length > 0) {
               doPost(
                 {
                   title: e.title,
                   text: e.text,
                   offline: true,
-                  tag: [],
+                  tag: e.tag,
                   id: Math.random().toString()
                 },
                 dispatch
               );
             }
+            setState({ open: false });
           }}
-          initial={{ title: "", text: "", tag: state.tag }}
-          menus={() => (
-            <div>
-              <IconButton
-                style={{ width: 50, height: 50 }}
-                onClick={() =>
-                  setState(prev => {
-                    return { editLabel: !prev.editLabel };
-                  })
-                }
-              >
-                <More />
-              </IconButton>
-            </div>
-          )}
-          options={() => (
-            <div>
-              {state.editLabel && (
-                <EditLabelMol
-                  tagList={["test"]}
-                  selected={v =>
-                    setState(prev => {
-                      return { tag: prev.tag.concat(v) };
-                    })
-                  }
-                  unSelected={v =>
-                    setState(prev => {
-                      const next = prev.tag.filter(label => {
-                        if (label !== v) return label;
-                      });
-                      return { tag: next };
-                    })
-                  }
-                />
-              )}
-            </div>
-          )}
+          initial={{ title: "", text: "", tag: [] }}
+          allTag={allTag}
         />
       ) : (
         <div

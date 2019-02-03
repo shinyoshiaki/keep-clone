@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from "react";
 import useObject from "useobject";
 import { Star, MoreVert, Delete, More } from "@material-ui/icons";
-import { IconButton, Modal } from "@material-ui/core";
-import EditModalMol from "../editModal";
+import { IconButton } from "@material-ui/core";
 import TagLabelAtom from "../../atoms/tagLabel";
 
 export interface Card {
@@ -17,22 +16,14 @@ const display = (open: boolean) => (open ? "" : "none");
 const CardMol: FunctionComponent<{
   card: Card;
   onRemove: (id: string) => void;
-  onChange: (card: Card) => void;
-}> = ({ card, onRemove, onChange }) => {
+  modal: (open: boolean, close: () => void, card: Card) => any;
+}> = ({ card, onRemove, modal }) => {
   const { state, setState } = useObject({ open: false, modal: false });
   const { title, text, id, tag } = card;
 
   return (
     <div>
-      <EditModalMol
-        open={state.modal}
-        onClose={() => setState({ modal: false })}
-        onChange={v => {
-          const { title, text } = v;
-          onChange({ title, text, id, tag: [] });
-        }}
-        initial={{ title, text, tag }}
-      />
+      {modal(state.modal, () => setState({ modal: false }), card)}
       <div
         style={{
           borderRadius: 5,
@@ -71,14 +62,16 @@ const CardMol: FunctionComponent<{
               height: 50
             }}
           >
-            <IconButton style={{ display: display(state.open), width: 50 }}>
-              <Star />
-            </IconButton>
+            {state.open && (
+              <IconButton style={{ width: 50 }}>
+                <Star />
+              </IconButton>
+            )}
           </div>
           {tag.length > 0 && (
             <div style={{ gridArea: "tag", paddingTop: 10 }}>
               {tag.map(label => (
-                <TagLabelAtom label={label} />
+                <TagLabelAtom label={label} key={label} />
               ))}
             </div>
           )}
@@ -92,10 +85,7 @@ const CardMol: FunctionComponent<{
             }}
           >
             <div style={{ display: display(state.open) }}>
-              <IconButton
-                style={{ width: 50 }}
-                onClick={() => onRemove(card.id)}
-              >
+              <IconButton style={{ width: 50 }} onClick={() => onRemove(id)}>
                 <Delete />
               </IconButton>
               <IconButton style={{ width: 50 }}>

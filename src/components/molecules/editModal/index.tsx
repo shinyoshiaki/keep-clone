@@ -1,20 +1,15 @@
 import React, { FunctionComponent } from "react";
 import { Modal } from "@material-ui/core";
-import EditMol from "../edit";
+import EditMol, { EditInput } from "../edit";
 
 const EditModalMol: FunctionComponent<{
   open: boolean;
-  onClose: () => void;
-  onChange: (v: { title: string; text: string }) => void;
+  onChange: (v: EditInput) => void;
+  allTag: string[];
   initial: { title: string; text: string; tag: string[] };
-}> = ({ open, onClose, initial, onChange }) => {
+}> = ({ open, initial, onChange, allTag }) => {
   return (
-    <Modal
-      open={open}
-      onClose={() => {
-        onClose();
-      }}
-    >
+    <Modal open={open}>
       <div
         style={{
           height: "100%",
@@ -27,10 +22,9 @@ const EditModalMol: FunctionComponent<{
           <EditMol
             onClose={v => {
               onChange(v);
-              onClose();
             }}
-            menus={() => {}}
             initial={initial}
+            allTag={allTag}
           />
         </div>
       </div>

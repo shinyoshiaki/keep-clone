@@ -5,12 +5,19 @@ import { State, doRemove, doChange } from "../../../modules/main";
 import { Dispatch } from "redux";
 import Masonry from "react-masonry-component";
 import CardMol from "../../../components/molecules/card";
+import EditModalMol from "../../../components/molecules/editModal";
+import useObject from "useobject";
 
 interface Props extends State {
   dispatch: Dispatch<any>;
 }
 
 const CardListOrg: FunctionComponent<Props> = ({ posts, dispatch }) => {
+  const allTag: string[] = posts.flatMap(post => {
+    if (post.tag.length > 0) return post.tag;
+    else return [] as string[];
+  });
+
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <Masonry options={{ fitWidth: true, columnWidth: 350 }}>
@@ -20,11 +27,22 @@ const CardListOrg: FunctionComponent<Props> = ({ posts, dispatch }) => {
               <CardMol
                 card={card}
                 onRemove={id => doRemove(id, dispatch)}
-                onChange={v => {
-                  const { title, text, id } = v;
-                  doChange(
-                    { id, title, text, tag: [], offline: true },
-                    dispatch
+                modal={(open, close, card) => {
+                  const { title, text, id, tag } = card;
+                  return (
+                    <EditModalMol
+                      open={open}
+                      onChange={v => {
+                        const { title, text, tag } = v;
+                        doChange(
+                          { id, title, text, tag, offline: true },
+                          dispatch
+                        );
+                        close();
+                      }}
+                      initial={{ title, text, tag }}
+                      allTag={allTag}
+                    />
                   );
                 }}
               />

@@ -5,6 +5,10 @@ import Component from ".";
 
 storiesOf("molecules", module).add("edit", () => (
   <div style={{ height: "100vh" }}>
-    <Component onClose={action("story")} menus={() => <div>some</div>} />
+    <Component
+      onClose={action("story")}
+      menus={() => <div>some</div>}
+      allTag={["some"]}
+    />
   </div>
 ));
