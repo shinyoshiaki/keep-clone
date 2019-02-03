@@ -16,7 +16,8 @@ const initialState: State = { posts: [] };
 
 enum ActionName {
   POST = "MAIN_POST",
-  REMOVE = "MAIN_REMOVE"
+  REMOVE = "MAIN_REMOVE",
+  CHANGE = "MAIN_CHANGE"
 }
 
 interface PostAction extends Action {
@@ -40,7 +41,19 @@ export const doRemove = async (
   dispatch({ type: ActionName.REMOVE, payload: id });
 };
 
-type Actions = PostAction | RemoveAction;
+interface ChangeAction extends Action {
+  type: ActionName.CHANGE;
+  payload: Post;
+}
+
+export const doChange = async (
+  post: Post,
+  dispatch: Dispatch<ChangeAction>
+) => {
+  dispatch({ type: ActionName.CHANGE, payload: post });
+};
+
+type Actions = PostAction | RemoveAction | ChangeAction;
 
 export default function reducer(state = initialState, action: Actions) {
   switch (action.type) {
@@ -54,6 +67,14 @@ export default function reducer(state = initialState, action: Actions) {
           if (v.id !== action.payload) return v;
         })
       } as State;
+    }
+    case ActionName.CHANGE: {
+      const next = state.posts.map(post => {
+        if (post.id === action.payload.id) {
+          return action.payload;
+        } else return post;
+      });
+      return { ...state, posts: next } as State;
     }
     default:
       return state;

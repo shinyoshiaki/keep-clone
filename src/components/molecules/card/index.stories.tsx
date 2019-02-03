@@ -11,7 +11,8 @@ storiesOf("molecules", module).add("card", () => (
         title: "title",
         text: "text"
       }}
-      onRemove={action}
+      onRemove={action("story")}
+      onChange={action("story")}
     />
   </div>
 ));

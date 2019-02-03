@@ -8,10 +8,10 @@ const LabelListMol: FunctionComponent<{
   onClick: (v: string) => void;
 }> = ({ labels, onClick }) => {
   return (
-    <div>
+    <div style={{ width: 270 }}>
       <Typography style={{ padding: 10 }}>label</Typography>
-      {labels.map(label => (
-        <TagLabelAtom label={label} onClick={onClick} />
+      {labels.map((label, i) => (
+        <TagLabelAtom label={label} onClick={onClick} key={i} />
       ))}
       <div style={{ display: "flex", padding: 10 }}>
         <Edit

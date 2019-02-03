@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, IconButton } from "@material-ui/core";
 import useObject from "useobject";
 import EditMol, { EditInput } from "../../../components/molecules/edit";
+import { More } from "@material-ui/icons";
 
 const MemoOrgView: FunctionComponent<{ save: (input: EditInput) => void }> = ({
   save
@@ -15,6 +16,13 @@ const MemoOrgView: FunctionComponent<{ save: (input: EditInput) => void }> = ({
             setState({ open: false });
             save(e);
           }}
+          menus={() => (
+            <div>
+              <IconButton style={{ width: 50, height: 50 }}>
+                <More />
+              </IconButton>
+            </div>
+          )}
         />
       ) : (
         <div

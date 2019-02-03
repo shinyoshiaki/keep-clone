@@ -5,6 +5,6 @@ import { action } from "@storybook/addon-actions";
 
 storiesOf("molecules", module).add("header", () => (
   <div style={{ height: "100vh" }}>
-    <Component enterSearch={action("story")} />
+    <Component enterSearch={action("story")} drawer={() => <p>some</p>} />
   </div>
 ));

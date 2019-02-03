@@ -1,16 +1,25 @@
 import React, { FunctionComponent } from "react";
-import { AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Drawer
+} from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import SearchBarAtom from "../../atoms/searchbar";
+import useObject from "useobject";
 
-const HeaderMol: FunctionComponent<{ enterSearch: (v: string) => void }> = ({
-  enterSearch
-}) => {
+const HeaderMol: FunctionComponent<{
+  enterSearch: (v: string) => void;
+  drawer: () => any;
+}> = ({ drawer, enterSearch }) => {
+  const { state, setState } = useObject({ open: false });
   return (
     <div>
       <AppBar position="static">
         <Toolbar>
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={() => setState({ open: true })}>
             <Menu />
           </IconButton>
           <Typography variant="h6" color="inherit">
@@ -19,6 +28,9 @@ const HeaderMol: FunctionComponent<{ enterSearch: (v: string) => void }> = ({
           <SearchBarAtom onSubmit={enterSearch} />
         </Toolbar>
       </AppBar>
+      <Drawer open={state.open} onClose={() => setState({ open: false })}>
+        {drawer()}
+      </Drawer>
     </div>
   );
 };

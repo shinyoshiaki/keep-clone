@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from "react";
-import CardListView from "./view";
 import { connect } from "react-redux";
 import { ReduxState } from "../../../modules/createStore";
-import { State, doRemove } from "../../../modules/main";
+import { State, doRemove, doChange } from "../../../modules/main";
 import { Dispatch } from "redux";
+import Masonry from "react-masonry-component";
+import CardMol from "../../../components/molecules/card";
 
 interface Props extends State {
   dispatch: Dispatch<any>;
@@ -11,12 +12,27 @@ interface Props extends State {
 
 const CardListOrg: FunctionComponent<Props> = ({ posts, dispatch }) => {
   return (
-    <CardListView
-      cards={posts}
-      onRemove={id => {
-        doRemove(id, dispatch);
-      }}
-    />
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <Masonry options={{ fitWidth: true, columnWidth: 350 }}>
+        {posts.map((card, i) => (
+          <div style={{ width: 350, maxWidth: "90vw" }} key={i}>
+            <div style={{ padding: 10 }}>
+              <CardMol
+                card={card}
+                onRemove={id => doRemove(id, dispatch)}
+                onChange={v => {
+                  const { title, text, id } = v;
+                  doChange(
+                    { id, title, text, tag: [], offline: true },
+                    dispatch
+                  );
+                }}
+              />
+            </div>
+          </div>
+        ))}
+      </Masonry>
+    </div>
   );
 };
 
