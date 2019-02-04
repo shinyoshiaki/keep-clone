@@ -15,15 +15,6 @@ const LabelListMol: FunctionComponent<{
       {labels.map((label, i) => (
         <TagButtonAtom label={label} onClick={onClick} key={i} />
       ))}
-      <div style={{ display: "flex", padding: 10 }}>
-        <Edit
-          style={{
-            paddingRight: 30,
-            color: "gray"
-          }}
-        />
-        {"edit label"}
-      </div>
     </div>
   );
 };
