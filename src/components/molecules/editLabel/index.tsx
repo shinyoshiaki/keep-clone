@@ -36,6 +36,7 @@ const EditLabelMol: FunctionComponent<{
             });
           }
         }}
+        style={{ padding: 10 }}
       />
       <div style={{ display: "flex" }}>
         {state.tagList.map(tag => (

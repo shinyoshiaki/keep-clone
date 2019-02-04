@@ -45,7 +45,12 @@ const SearchBarAtom: FunctionComponent<{ onSubmit: (v: string) => void }> = ({
         value={state.input}
       />
       {state.input.length > 0 && (
-        <IconButton onClick={() => setState({ input: "" })}>
+        <IconButton
+          onClick={() => {
+            setState({ input: "" });
+            onSubmit("");
+          }}
+        >
           <Close />
         </IconButton>
       )}
