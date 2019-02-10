@@ -4,7 +4,8 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Drawer
+  Drawer,
+  Button
 } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import SearchBarAtom from "../../atoms/searchbar";
@@ -13,7 +14,8 @@ import useObject from "useobject";
 const HeaderMol: FunctionComponent<{
   enterSearch: (v: string) => void;
   drawer: (close: () => void) => any;
-}> = ({ drawer, enterSearch }) => {
+  history: { push: (url: string) => void };
+}> = ({ drawer, enterSearch, history }) => {
   const { state, setState } = useObject({ open: false });
   return (
     <div>
@@ -26,6 +28,15 @@ const HeaderMol: FunctionComponent<{
             keep
           </Typography>
           <SearchBarAtom onSubmit={enterSearch} />
+          <Button
+            color="inherit"
+            onClick={() => {
+              console.log({ history });
+              history.push("login");
+            }}
+          >
+            login
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer open={state.open} onClose={() => setState({ open: false })}>

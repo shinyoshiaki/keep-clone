@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { HashRouter, Route } from "react-router-dom";
 import createStore from "./modules/createStore";
 import { PersistGate } from "redux-persist/integration/react";
+import Login from "./pages/Login";
 
 const { store, persistor } = createStore();
 
@@ -15,6 +16,7 @@ ReactDOM.render(
       <HashRouter>
         <div>
           <Route exact path="/" component={App} />
+          <Route path="/login" component={Login} />
         </div>
       </HashRouter>
     </PersistGate>

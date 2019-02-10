@@ -8,10 +8,12 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import main, { State } from "./main";
 import ui, { StateUi } from "./ui";
+import user, { StateUser } from "./user";
 
 const rootReducer = combineReducers({
   main,
-  ui
+  ui,
+  user
 });
 
 const persistConfig = {
@@ -30,4 +32,5 @@ export default function createStore() {
 export interface ReduxState {
   main: State;
   ui: StateUi;
+  user: StateUser;
 }

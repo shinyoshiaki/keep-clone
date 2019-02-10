@@ -6,12 +6,19 @@ import { ReduxState } from "../../../modules/createStore";
 import { State } from "../../../modules/main";
 import { Dispatch } from "redux";
 import { doSetSearch, doSetViewTag } from "../../../modules/ui";
+import { withRouter } from "react-router-dom";
 
 interface Props extends State {
   dispatch: Dispatch<any>;
+  history?: any;
 }
 
-const LayoutOrg: FunctionComponent<Props> = ({ children, posts, dispatch }) => {
+const LayoutOrg: FunctionComponent<Props> = ({
+  children,
+  posts,
+  dispatch,
+  history
+}) => {
   const allTag: string[] = Array.from(
     new Set(
       posts.flatMap(post => {
@@ -40,12 +47,13 @@ const LayoutOrg: FunctionComponent<Props> = ({ children, posts, dispatch }) => {
             }}
           />
         )}
+        history={history}
       />
       {children}
     </div>
   );
 };
 
-export default connect((state: ReduxState) => {
+export default withRouter(connect((state: ReduxState) => {
   return { ...state.main };
-})(LayoutOrg);
+})(LayoutOrg) as any);
