@@ -5,6 +5,6 @@ import { action } from "@storybook/addon-actions";
 
 storiesOf("molecules", module).add("accountForm", () => (
   <div style={{ height: "100vh" }}>
-    <Component type="login" />
+    <Component type="login" onSubmit={action("")} />
   </div>
 ));

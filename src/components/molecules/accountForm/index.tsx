@@ -1,7 +1,12 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { TextField, Button, Typography } from "@material-ui/core";
 
-const AccoutFormMol: FunctionComponent<{ type: string }> = ({ type }) => {
+const AccoutFormMol: FunctionComponent<{
+  type: string;
+  onSubmit: (name: string, pass: string) => void;
+}> = ({ type, onSubmit }) => {
+  const [name, setName] = useState("");
+  const [pass, setPass] = useState("");
   return (
     <div
       style={{
@@ -22,10 +27,28 @@ const AccoutFormMol: FunctionComponent<{ type: string }> = ({ type }) => {
         }}
       >
         <Typography>{type}</Typography>
-        <TextField variant="outlined" placeholder="name" label="name" />
-        <TextField variant="outlined" placeholder="password" label="password" />
+        <TextField
+          variant="outlined"
+          placeholder="name"
+          label="name"
+          onChange={e => setName(e.target.value)}
+        />
+        <TextField
+          variant="outlined"
+          placeholder="password"
+          label="password"
+          onChange={e => setPass(e.target.value)}
+        />
         <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-          <Button>{type}</Button>
+          <Button
+            onClick={() => {
+              onSubmit(name, pass);
+              setName("");
+              setPass("");
+            }}
+          >
+            {type}
+          </Button>
         </div>
       </div>
     </div>

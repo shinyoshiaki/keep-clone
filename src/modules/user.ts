@@ -3,6 +3,7 @@ import { Action, Dispatch } from "redux";
 export interface StateUser {
   name?: string;
   session?: string;
+  code?: string;
 }
 
 const initialState: StateUser = {};
@@ -14,7 +15,7 @@ enum ActionName {
 
 interface SignUpAction extends Action {
   type: ActionName.SIGNUP;
-  payload: { name: string };
+  payload: { name: string; code: string };
 }
 
 interface LoginAction extends Action {
@@ -24,8 +25,12 @@ interface LoginAction extends Action {
 
 type Actions = SignUpAction | LoginAction;
 
-export const doSignUp = (name: string, dispatch: Dispatch<SignUpAction>) => {
-  dispatch({ type: ActionName.SIGNUP, payload: { name } });
+export const doSignUp = (
+  name: string,
+  code: string,
+  dispatch: Dispatch<SignUpAction>
+) => {
+  dispatch({ type: ActionName.SIGNUP, payload: { name, code } });
 };
 
 export const doLogin = (
@@ -39,7 +44,11 @@ export const doLogin = (
 export default function reducer(state = initialState, action: Actions) {
   switch (action.type) {
     case ActionName.SIGNUP: {
-      return { ...state, name: action.payload.name } as StateUser;
+      return {
+        ...state,
+        name: action.payload.name,
+        code: action.payload.code
+      } as StateUser;
     }
     case ActionName.LOGIN: {
       return {

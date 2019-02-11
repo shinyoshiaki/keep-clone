@@ -7,6 +7,7 @@ import { HashRouter, Route } from "react-router-dom";
 import createStore from "./modules/createStore";
 import { PersistGate } from "redux-persist/integration/react";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const { store, persistor } = createStore();
 
@@ -17,6 +18,7 @@ ReactDOM.render(
         <div>
           <Route exact path="/" component={App} />
           <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
         </div>
       </HashRouter>
     </PersistGate>
