@@ -7,8 +7,10 @@ import { State } from "../../../modules/main";
 import { Dispatch } from "redux";
 import { doSetSearch, doSetViewTag } from "../../../modules/ui";
 import { withRouter } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { StateUser } from "../../../modules/user";
 
-interface Props extends State {
+interface Props extends State, StateUser {
   dispatch: Dispatch<any>;
   history?: any;
 }
@@ -17,7 +19,8 @@ const LayoutOrg: FunctionComponent<Props> = ({
   children,
   posts,
   dispatch,
-  history
+  history,
+  name
 }) => {
   const allTag: string[] = Array.from(
     new Set(
@@ -47,7 +50,29 @@ const LayoutOrg: FunctionComponent<Props> = ({
             }}
           />
         )}
-        history={history}
+        account={() =>
+          name ? (
+            <Button
+              color="inherit"
+              onClick={() => {
+                console.log({ history });
+                history.push("login");
+              }}
+            >
+              {name}
+            </Button>
+          ) : (
+            <Button
+              color="inherit"
+              onClick={() => {
+                console.log({ history });
+                history.push("login");
+              }}
+            >
+              login
+            </Button>
+          )
+        }
       />
       {children}
     </div>
@@ -55,5 +80,5 @@ const LayoutOrg: FunctionComponent<Props> = ({
 };
 
 export default withRouter(connect((state: ReduxState) => {
-  return { ...state.main };
+  return { ...state.main, ...state.user };
 })(LayoutOrg) as any);

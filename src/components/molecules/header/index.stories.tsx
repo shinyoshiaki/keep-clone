@@ -8,7 +8,7 @@ storiesOf("molecules", module).add("header", () => (
     <Component
       enterSearch={action("story")}
       drawer={() => <p>some</p>}
-      history={{ push: action("") }}
+      account={() => <div>hello</div>}
     />
   </div>
 ));
