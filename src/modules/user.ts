@@ -20,7 +20,7 @@ interface SignUpAction extends Action {
 
 interface LoginAction extends Action {
   type: ActionName.LOGIN;
-  payload: { name: string; session: string };
+  payload: { name: string; session: string; code: string };
 }
 
 type Actions = SignUpAction | LoginAction;
@@ -36,9 +36,10 @@ export const doSignUp = (
 export const doLogin = (
   name: string,
   session: string,
+  code: string,
   dispatch: Dispatch<LoginAction>
 ) => {
-  dispatch({ type: ActionName.LOGIN, payload: { name, session } });
+  dispatch({ type: ActionName.LOGIN, payload: { name, session, code } });
 };
 
 export default function reducer(state = initialState, action: Actions) {
@@ -46,15 +47,13 @@ export default function reducer(state = initialState, action: Actions) {
     case ActionName.SIGNUP: {
       return {
         ...state,
-        name: action.payload.name,
-        code: action.payload.code
+        ...action.payload
       } as StateUser;
     }
     case ActionName.LOGIN: {
       return {
         ...state,
-        name: action.payload.name,
-        session: action.payload.session
+        ...action.payload
       } as StateUser;
     }
     default:

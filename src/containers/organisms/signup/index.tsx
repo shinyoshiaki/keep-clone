@@ -13,24 +13,24 @@ interface Props {
 }
 
 const SignupOrg: FunctionComponent<Props> = ({ dispatch, history }) => {
-  const { data, fetchData, isLoading, isError } = useKeepApi("/users/signup", {
-    name: "",
-    code: "",
-    pass: ""
-  });
+  const { data, fetchData, isLoading, isError, arg } = useKeepApi(
+    "/user/signup",
+    { name: "", pass: "" },
+    { code: "" }
+  );
 
   useEffect(() => {
-    if (data.name === "") return;
-    const { name, pass, code } = data;
-    doSignUp(name, code, dispatch);
+    if (data.code === "") return;
+    const { name, pass } = arg;
+    doSignUp(name, data.code, dispatch);
     login(name, pass);
   }, [data]);
 
   const login = async (name: string, pass: string) => {
-    const res = await req.post("/users/login", { name, pass }).catch();
+    const res = await req.post("/user/login", { name, pass }).catch();
     if (!res) return;
     const result: { name: string; code: string; session: string } = res.data;
-    doLogin(name, result.session, dispatch);
+    doLogin(name, result.session, result.code, dispatch);
     history.push("/");
   };
 

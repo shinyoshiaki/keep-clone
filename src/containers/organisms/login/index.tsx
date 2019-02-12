@@ -13,15 +13,17 @@ interface Props {
 }
 
 const LoginOrg: FunctionComponent<Props> = ({ history, dispatch }) => {
-  const { fetchData, data, isLoading, isError } = useKeepApi("/users/login", {
-    session: "",
-    name: ""
-  });
+  const { fetchData, data, isLoading, isError, arg } = useKeepApi(
+    "/user/login",
+    { name: "", pass: "" },
+    { session: "", code: "" }
+  );
 
   useEffect(() => {
-    const { name, session } = data;
-    if (name === "") return;
-    doLogin(name, session, dispatch);
+    const { session, code } = data;
+    const { name } = arg;
+    if (session === "") return;
+    doLogin(name, session,code ,dispatch);
     history.push("/");
   }, [data]);
 
