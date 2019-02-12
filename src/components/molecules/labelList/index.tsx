@@ -12,9 +12,11 @@ const LabelListMol: FunctionComponent<{
     <div style={{ width: 270 }}>
       <Typography style={{ padding: 10 }}>label</Typography>
       <TagButtonAtom label="all" onClick={() => resetAll()} />
-      {labels.map((label, i) => (
-        <TagButtonAtom label={label} onClick={onClick} key={i} />
-      ))}
+      {labels
+        .filter(v => v !== "")
+        .map((label, i) => (
+          <TagButtonAtom label={label} onClick={onClick} key={i} />
+        ))}
     </div>
   );
 };

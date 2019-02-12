@@ -52,16 +52,16 @@ const CardListOrg: FunctionComponent<Props> = ({
                 <div style={{ padding: 10 }}>
                   <CardMol
                     card={card}
-                    onRemove={() => doRemove(card.id, dispatch)}
+                    onRemove={() => doRemove(card.hash, dispatch)}
                     modal={(open, close, card) => {
-                      const { title, text, id, tag } = card;
+                      const { title, text, hash, tag } = card;
                       return (
                         <EditModalMol
                           open={open}
                           onChange={v => {
                             const { title, text, tag } = v;
                             doChange(
-                              { id, title, text, tag, offline: true },
+                              { hash, title, text, tag, offline: true },
                               dispatch
                             );
                             close();
@@ -72,7 +72,7 @@ const CardListOrg: FunctionComponent<Props> = ({
                             <div>
                               <IconButton
                                 onClick={() => {
-                                  doRemove(card.id, dispatch);
+                                  doRemove(card.hash, dispatch);
                                   close();
                                 }}
                               >

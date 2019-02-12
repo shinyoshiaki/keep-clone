@@ -7,7 +7,7 @@ storiesOf("molecules", module).add("card", () => (
   <div style={{ height: "100vh" }}>
     <Component
       card={{
-        id: Math.random().toString(),
+        hash: Math.random().toString(),
         title: "title",
         text: "text",
         tag: ["some", "test"]

@@ -34,8 +34,8 @@ const MemoOrg: FunctionComponent<Props> = ({
   const onSubmit = (title: string, text: string, tag: string[]) => {
     if (session && code) fetchData({ title, text, tag, session, code });
     else {
-      const id = Math.random().toString();
-      doPost({ title, text, offline: true, tag, id }, dispatch);
+      const hash = Math.random().toString();
+      doPost({ title, text, offline: true, tag, hash }, dispatch);
     }
   };
 
@@ -43,7 +43,7 @@ const MemoOrg: FunctionComponent<Props> = ({
     if (data.hash !== "") {
       console.log({ data });
       const { title, text, tag } = arg;
-      doPost({ title, text, offline: false, tag, id: data.hash }, dispatch);
+      doPost({ title, text, offline: false, tag, hash: data.hash }, dispatch);
     }
   }, [data]);
 
@@ -51,8 +51,8 @@ const MemoOrg: FunctionComponent<Props> = ({
     if (isError) {
       console.log({ isError });
       const { title, text, tag } = arg;
-      const id = Math.random().toString();
-      doPost({ title, text, offline: true, tag, id }, dispatch);
+      const hash = Math.random().toString();
+      doPost({ title, text, offline: true, tag, hash }, dispatch);
     }
   }, [isError]);
 

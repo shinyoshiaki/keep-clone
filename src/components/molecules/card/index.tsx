@@ -5,7 +5,7 @@ import { IconButton } from "@material-ui/core";
 import TagLabelAtom from "../../atoms/tagLabel";
 
 export interface Card {
-  id: string;
+  hash: string;
   title: string;
   text: string;
   tag: string[];
@@ -19,7 +19,7 @@ const CardMol: FunctionComponent<{
   modal: (open: boolean, close: () => void, card: Card) => any;
 }> = ({ card, onRemove, modal }) => {
   const { state, setState } = useObject({ open: false, modal: false });
-  const { title, text, id, tag } = card;
+  const { title, text, hash, tag } = card;
 
   return (
     <div>
@@ -70,9 +70,11 @@ const CardMol: FunctionComponent<{
           </div>
           {tag.length > 0 && (
             <div style={{ gridArea: "tag", paddingTop: 10 }}>
-              {tag.map(label => (
-                <TagLabelAtom label={label} key={label} />
-              ))}
+              {tag
+                .filter(label => label !== "")
+                .map(label => (
+                  <TagLabelAtom label={label} key={label} />
+                ))}
             </div>
           )}
           <div

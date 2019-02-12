@@ -1,7 +1,7 @@
 import { Action, Dispatch } from "redux";
 
 export interface Post {
-  id: string;
+  hash: string;
   title: string;
   text: string;
   tag: string[];
@@ -35,22 +35,23 @@ interface RemoveAction extends Action {
 }
 
 export const doRemove = async (
-  id: string,
+  hash: string,
   dispatch: Dispatch<RemoveAction>
 ) => {
-  dispatch({ type: ActionName.REMOVE, payload: id });
+  dispatch({ type: ActionName.REMOVE, payload: hash });
 };
 
 interface ChangeAction extends Action {
   type: ActionName.CHANGE;
-  payload: Post;
+  payload: { post: Post; newHash?: string };
 }
 
 export const doChange = async (
   post: Post,
-  dispatch: Dispatch<ChangeAction>
+  dispatch: Dispatch<ChangeAction>,
+  newHash?: string
 ) => {
-  dispatch({ type: ActionName.CHANGE, payload: post });
+  dispatch({ type: ActionName.CHANGE, payload: { post, newHash } });
 };
 
 type Actions = PostAction | RemoveAction | ChangeAction;
@@ -58,20 +59,26 @@ type Actions = PostAction | RemoveAction | ChangeAction;
 export default function reducer(state = initialState, action: Actions) {
   switch (action.type) {
     case ActionName.POST: {
+      action.payload.tag = action.payload.tag.filter(v => v !== "");
       return { ...state, posts: state.posts.concat(action.payload) } as State;
     }
     case ActionName.REMOVE: {
       return {
         ...state,
         posts: state.posts.filter(v => {
-          if (v.id !== action.payload) return v;
+          if (v.hash !== action.payload) return v;
         })
       } as State;
     }
     case ActionName.CHANGE: {
       const next = state.posts.map(post => {
-        if (post.id === action.payload.id) {
-          return action.payload;
+        if (post.hash === action.payload.post.hash) {
+          const post = action.payload.post;
+          if (action.payload.newHash) {
+            post.hash = action.payload.newHash;
+          }
+          post.tag = post.tag.filter(v => v !== "");
+          return post;
         } else return post;
       });
       return { ...state, posts: next } as State;
