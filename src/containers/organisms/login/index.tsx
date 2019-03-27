@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import AccoutFormMol from "../../../components/molecules/accountForm";
-import { useKeepApi } from "../../../hooks/useApi";
 import { doLogin } from "../../../modules/user";
 import { Dispatch } from "redux";
 import { History } from "history";
 import { withRouter } from "react-router-dom";
+import UserWebApi from "../../../graphql/api";
 
 interface Props {
   dispatch: Dispatch;
@@ -13,27 +13,19 @@ interface Props {
 }
 
 const LoginOrg: FunctionComponent<Props> = ({ history, dispatch }) => {
-  const { fetchData, data, isLoading, isError, arg } = useKeepApi(
-    "/user/login",
-    { name: "", pass: "" },
-    { session: "", code: "" }
-  );
+  const [name, setName] = useState("");
+  const [pass, setPass] = useState("");
 
-  useEffect(() => {
-    const { session, code } = data;
-    const { name } = arg;
-    if (session === "") return;
-    doLogin(name, session,code ,dispatch);
-    history.push("/");
-  }, [data]);
+  const api = new UserWebApi();
 
   return (
     <div>
-      {isLoading && "loading"}
-      {isError && JSON.stringify(isError)}
       <AccoutFormMol
         type="login"
-        onSubmit={(name, pass) => fetchData({ name, pass })}
+        onSubmit={async (name, pass) => {
+          const res = await api.getMe();
+          console.log({ res });
+        }}
       />
     </div>
   );
