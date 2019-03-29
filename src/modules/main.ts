@@ -1,5 +1,3 @@
-import { Action, Dispatch } from "redux";
-
 export interface Post {
   hash: string;
   title: string;
@@ -14,55 +12,33 @@ export interface State {
 
 const initialState: State = { posts: [] };
 
-enum ActionName {
-  POST = "MAIN_POST",
-  REMOVE = "MAIN_REMOVE",
-  CHANGE = "MAIN_CHANGE"
-}
-
-interface PostAction extends Action {
-  type: ActionName.POST;
-  payload: Post;
-}
-
-export const doPost = async (post: Post, dispatch: Dispatch<PostAction>) => {
-  dispatch({ type: ActionName.POST, payload: post });
+export const doPost = (post: Post) => {
+  return { type: "MAIN_POST" as "MAIN_POST", payload: post };
 };
 
-interface RemoveAction extends Action {
-  type: ActionName.REMOVE;
-  payload: string;
-}
-
-export const doRemove = async (
-  hash: string,
-  dispatch: Dispatch<RemoveAction>
-) => {
-  dispatch({ type: ActionName.REMOVE, payload: hash });
+export const doRemove = (hash: string) => {
+  return { type: "MAIN_REMOVE" as "MAIN_REMOVE", payload: hash };
 };
 
-interface ChangeAction extends Action {
-  type: ActionName.CHANGE;
-  payload: { post: Post; newHash?: string };
-}
-
-export const doChange = async (
-  post: Post,
-  dispatch: Dispatch<ChangeAction>,
-  newHash?: string
-) => {
-  dispatch({ type: ActionName.CHANGE, payload: { post, newHash } });
+export const doChange = (post: Post, newHash?: string) => {
+  return {
+    type: "MAIN_CHANGE" as "MAIN_CHANGE",
+    payload: { post, newHash }
+  };
 };
 
-type Actions = PostAction | RemoveAction | ChangeAction;
+type Actions =
+  | ReturnType<typeof doPost>
+  | ReturnType<typeof doRemove>
+  | ReturnType<typeof doChange>;
 
 export default function reducer(state = initialState, action: Actions) {
   switch (action.type) {
-    case ActionName.POST: {
+    case "MAIN_POST": {
       action.payload.tag = action.payload.tag.filter(v => v !== "");
       return { ...state, posts: state.posts.concat(action.payload) } as State;
     }
-    case ActionName.REMOVE: {
+    case "MAIN_REMOVE": {
       return {
         ...state,
         posts: state.posts.filter(v => {
@@ -70,7 +46,7 @@ export default function reducer(state = initialState, action: Actions) {
         })
       } as State;
     }
-    case ActionName.CHANGE: {
+    case "MAIN_CHANGE": {
       const next = state.posts.map(post => {
         if (post.hash === action.payload.post.hash) {
           const post = action.payload.post;

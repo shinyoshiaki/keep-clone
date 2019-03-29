@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
-import GraphQLClient from "./client";
-import { User } from "./generated/graphql";
+import GraphQLClient from "../client";
+import { User } from "../generated/graphql";
 
 class UserWebApi {
   private graphqlClient: GraphQLClient = new GraphQLClient();
@@ -16,6 +16,8 @@ class UserWebApi {
           obj.password
         }" }) {
               token
+              code
+              name
             }
           }
         `
@@ -26,7 +28,11 @@ class UserWebApi {
 
     if (result.getUser) {
       const user = result.getUser as User;
-      return user.token;
+      return {
+        token: user.token,
+        code: user.code,
+        name: user.name
+      };
     }
 
     return undefined;

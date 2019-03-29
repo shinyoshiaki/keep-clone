@@ -44,9 +44,11 @@ const AccoutFormMol: FunctionComponent<{
         <div style={{ display: "flex", flexDirection: "row-reverse" }}>
           <Button
             onClick={() => {
-              onSubmit(name, pass);
-              setName("");
-              setPass("");
+              if (name && pass) {
+                onSubmit(name, pass);
+                setName("");
+                setPass("");
+              }
             }}
           >
             {type}

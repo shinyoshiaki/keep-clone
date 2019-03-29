@@ -36,7 +36,7 @@
     "redux-persist": "^5.10.0",
     "sha1": "^1.1.1",
     "sha256": "^0.2.0",
-    "typescript": "^3.3.3",
+    "typescript": "^3.4.0-dev.20190328",
     "useobject": "git+https://git@github.com/shinyoshiaki/useObject.git"
   },
   "scripts": {
