@@ -6,6 +6,7 @@ import { Dispatch } from "redux";
 import { History } from "history";
 import { withRouter } from "react-router-dom";
 import UserWebApi from "../../../graphql/api";
+import { useApi } from "../../../hooks/useApi";
 
 interface Props {
   dispatch: Dispatch;
@@ -13,18 +14,25 @@ interface Props {
 }
 
 const LoginOrg: FunctionComponent<Props> = ({ history, dispatch }) => {
-  const [name, setName] = useState("");
-  const [pass, setPass] = useState("");
-
   const api = new UserWebApi();
+
+  const { loading, fetch } = useApi(api.getMe);
 
   return (
     <div>
       <AccoutFormMol
         type="login"
-        onSubmit={async (name, pass) => {
-          const res = await api.getMe();
-          console.log({ res });
+        onSubmit={async (name, password) => {
+          if (name && password) {
+            if (!loading) {
+              const res = await fetch({ name, password });
+              if (res) {
+                console.log("success", { res });
+              } else {
+                console.log("error", { res });
+              }
+            }
+          }
         }}
       />
     </div>

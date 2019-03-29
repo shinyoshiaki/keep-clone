@@ -32,12 +32,14 @@ const AccoutFormMol: FunctionComponent<{
           placeholder="name"
           label="name"
           onChange={e => setName(e.target.value)}
+          value={name}
         />
         <TextField
           variant="outlined"
           placeholder="password"
           label="password"
           onChange={e => setPass(e.target.value)}
+          value={pass}
         />
         <div style={{ display: "flex", flexDirection: "row-reverse" }}>
           <Button

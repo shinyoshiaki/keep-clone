@@ -1,19 +1,20 @@
 import gql from "graphql-tag";
 import GraphQLClient from "./client";
+import { User } from "./generated/graphql";
 
 class UserWebApi {
-  private graphqlClient: GraphQLClient = new GraphQLClient(
-    "http://localhost:1333/query"
-  );
+  private graphqlClient: GraphQLClient = new GraphQLClient();
 
-  getMe = async () => {
+  getMe = async (obj: { name: string; password: string }) => {
     let result: any;
 
     try {
       result = await this.graphqlClient.query(
         gql`
           query getUser {
-            getUser(input: { name: "name", password: "pass" }) {
+            getUser(input: { name: "${obj.name}", password: "${
+          obj.password
+        }" }) {
               token
             }
           }
@@ -23,7 +24,12 @@ class UserWebApi {
       throw err;
     }
 
-    return result.getUser;
+    if (result.getUser) {
+      const user = result.getUser as User;
+      return user.token;
+    }
+
+    return undefined;
   };
 }
 

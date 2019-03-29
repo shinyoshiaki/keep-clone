@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { connect } from "react-redux";
 import AccoutFormMol from "../../../components/molecules/accountForm";
-import { useKeepApi, req } from "../../../hooks/useApi";
 import { doSignUp, doLogin } from "../../../modules/user";
 import { Dispatch } from "redux";
 import { History } from "history";
@@ -13,35 +12,27 @@ interface Props {
 }
 
 const SignupOrg: FunctionComponent<Props> = ({ dispatch, history }) => {
-  const { data, fetchData, isLoading, isError, arg } = useKeepApi(
-    "/user/signup",
-    { name: "", pass: "" },
-    { code: "" }
-  );
-
-  useEffect(() => {
-    if (data.code === "") return;
-    const { name, pass } = arg;
-    doSignUp(name, data.code, dispatch);
-    login(name, pass);
-  }, [data]);
+  // useEffect(() => {
+  //   if (data.code === "") return;
+  //   const { name, pass } = arg;
+  //   doSignUp(name, data.code, dispatch);
+  //   login(name, pass);
+  // }, [data]);
 
   const login = async (name: string, pass: string) => {
-    const res = await req.post("/user/login", { name, pass }).catch();
-    if (!res) return;
-    const result: { name: string; code: string; session: string } = res.data;
-    doLogin(name, result.session, result.code, dispatch);
-    history.push("/");
+    // const res = await req.post("/user/login", { name, pass }).catch();
+    // if (!res) return;
+    // const result: { name: string; code: string; session: string } = res.data;
+    // doLogin(name, result.session, result.code, dispatch);
+    // history.push("/");
   };
 
   return (
     <div>
-      {isLoading && "loding"}
-      {isError && JSON.stringify(isError)}
-      <AccoutFormMol
+      {/* <AccoutFormMol
         type="signup"
         onSubmit={(name, pass) => fetchData({ name, pass })}
-      />
+      /> */}
     </div>
   );
 };

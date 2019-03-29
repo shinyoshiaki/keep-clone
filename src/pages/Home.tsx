@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { ReduxState } from "../modules/createStore";
 import { Dispatch } from "redux";
 import { State, doPost, doChange } from "../modules/main";
-import { req } from "../hooks/useApi";
 import { StateUser } from "../modules/user";
 
 interface Props extends State, StateUser {
@@ -27,61 +26,61 @@ const Home: FunctionComponent<Props> = ({ posts, session, code, dispatch }) => {
       for (let post of posts) {
         if (fail) break;
         if (post.offline) {
-          const res = await req
-            .post("memo/post", {
-              session,
-              code,
-              title: post.title,
-              text: post.text,
-              tag: post.tag
-            })
-            .catch(() => {
-              fail = true;
-            });
-          if (res) {
-          }
+          // const res = await req
+          //   .post("memo/post", {
+          //     session,
+          //     code,
+          //     title: post.title,
+          //     text: post.text,
+          //     tag: post.tag
+          //   })
+          //   .catch(() => {
+          //     fail = true;
+          //   });
+          // if (res) {
+          // }
         }
       }
 
-      const get = await req
-        .post("memo/get", { session, code })
-        .catch(console.log);
-      if (!get) return;
-      const hashs = posts.map(post => post.hash);
+      //   const get = await req
+      //     .post("memo/get", { session, code })
+      //     .catch(console.log);
+      //   if (!get) return;
+      //   const hashs = posts.map(post => post.hash);
 
-      console.log({ get });
+      //   console.log({ get });
 
-      (get.data as {
-        memos: {
-          code: string;
-          hash: string;
-          title: string;
-          text: string;
-          tag: string;
-        }[];
-      }).memos.forEach(memo => {
-        if (!hashs.includes(memo.hash)) {
-          doPost(
-            { ...memo, tag: memo.tag.split(","), offline: false },
-            dispatch
-          );
-        } else {
-          const post = posts.find(post => post.hash === memo.hash);
-          if (post) {
-            const { tag, title, text } = post;
-            if (
-              tag !== memo.tag.split(",") ||
-              title !== memo.title ||
-              text !== memo.text
-            ) {
-              doChange(
-                { ...memo, tag: memo.tag.split(","), offline: false },
-                dispatch
-              );
-            }
-          }
-        }
-      });
+      //   (get.data as {
+      //     memos: {
+      //       code: string;
+      //       hash: string;
+      //       title: string;
+      //       text: string;
+      //       tag: string;
+      //     }[];
+      //   }).memos.forEach(memo => {
+      //     if (!hashs.includes(memo.hash)) {
+      //       doPost(
+      //         { ...memo, tag: memo.tag.split(","), offline: false },
+      //         dispatch
+      //       );
+      //     } else {
+      //       const post = posts.find(post => post.hash === memo.hash);
+      //       if (post) {
+      //         const { tag, title, text } = post;
+      //         if (
+      //           tag !== memo.tag.split(",") ||
+      //           title !== memo.title ||
+      //           text !== memo.text
+      //         ) {
+      //           doChange(
+      //             { ...memo, tag: memo.tag.split(","), offline: false },
+      //             dispatch
+      //           );
+      //         }
+      //       }
+      //     }
+      //   });
     }
   };
 
