@@ -5,6 +5,7 @@
   "homepage": "./",
   "dependencies": {
     "@emotion/core": "^10.0.6",
+    "@graphql-codegen/typescript-react-apollo": "^1.0.3",
     "@material-ui/core": "^3.9.1",
     "@material-ui/icons": "^3.0.2",
     "@material-ui/styles": "^3.0.0-alpha.9",
@@ -12,11 +13,19 @@
     "@types/node": "^10.12.20",
     "@types/react": "^16.7.22",
     "@types/react-dom": "^16.8.0",
+    "apollo-link": "^1.2.11",
+    "apollo-link-batch-http": "^1.2.11",
+    "apollo-link-http": "^1.5.14",
     "axios": "^0.18.0",
     "emotion": "^10.0.6",
+    "graphql": "^14.2.0",
     "history": "^4.7.2",
+    "localforage": "^1.7.3",
     "lodash": "^4.17.11",
+    "micro-graphql-react": "^0.3.1",
+    "moment": "^2.24.0",
     "react": "^16.8.1",
+    "react-apollo": "^2.5.3",
     "react-dom": "^16.8.1",
     "react-fit": "git+https://git@github.com/shinyoshiaki/react-fit.git",
     "react-masonry-component": "^6.2.1",
@@ -29,7 +38,7 @@
     "redux-persist": "^5.10.0",
     "sha1": "^1.1.1",
     "sha256": "^0.2.0",
-    "typescript": "^3.3.3",
+    "typescript": "^3.4.1",
     "useobject": "git+https://git@github.com/shinyoshiaki/useObject.git"
   },
   "scripts": {
@@ -38,7 +47,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "gen-gql": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,6 +61,10 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@graphql-codegen/cli": "^1.0.6",
+    "@graphql-codegen/typescript": "1.0.6",
+    "@graphql-codegen/typescript-operations": "1.0.6",
+    "@graphql-codegen/typescript-react-apollo": "1.0.6",
     "@storybook/addon-actions": "^4.1.11",
     "@storybook/addon-links": "^4.1.11",
     "@storybook/addons": "^4.1.11",
@@ -65,6 +79,12 @@
     "@types/sha256": "^0.2.0",
     "@types/storybook__addon-actions": "^3.4.1",
     "@types/storybook__react": "^4.0.0",
-    "babel-loader": "8.0.4"
+    "babel-loader": "8.0.4",
+    "graphql-code-generator": "^0.18.0",
+    "graphql-codegen-add": "^0.18.0",
+    "graphql-codegen-time": "^0.18.0",
+    "graphql-codegen-typescript-common": "^0.18.0",
+    "graphql-codegen-typescript-resolvers": "^0.18.0",
+    "graphql-codegen-typescript-server": "^0.18.0"
   }
 }

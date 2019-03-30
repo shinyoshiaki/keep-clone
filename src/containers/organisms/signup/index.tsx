@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { connect } from "react-redux";
 import AccoutFormMol from "../../../components/molecules/accountForm";
-import { useKeepApi, req } from "../../../hooks/useApi";
-import { doSignUp, doLogin } from "../../../modules/user";
+import { doLogin } from "../../../modules/user";
 import { Dispatch } from "redux";
 import { History } from "history";
 import { withRouter } from "react-router";
+import { useApi } from "../../../hooks/useApi";
+import signUpApi from "../../../graphql/api/signup";
 
 interface Props {
   dispatch: Dispatch;
@@ -13,34 +14,22 @@ interface Props {
 }
 
 const SignupOrg: FunctionComponent<Props> = ({ dispatch, history }) => {
-  const { data, fetchData, isLoading, isError, arg } = useKeepApi(
-    "/user/signup",
-    { name: "", pass: "" },
-    { code: "" }
-  );
-
-  useEffect(() => {
-    if (data.code === "") return;
-    const { name, pass } = arg;
-    doSignUp(name, data.code, dispatch);
-    login(name, pass);
-  }, [data]);
-
-  const login = async (name: string, pass: string) => {
-    const res = await req.post("/user/login", { name, pass }).catch();
-    if (!res) return;
-    const result: { name: string; code: string; session: string } = res.data;
-    doLogin(name, result.session, result.code, dispatch);
-    history.push("/");
-  };
-
+  const { loading, fetch, error } = useApi(signUpApi);
   return (
     <div>
-      {isLoading && "loding"}
-      {isError && JSON.stringify(isError)}
+      {error && <p>error</p>}
       <AccoutFormMol
         type="signup"
-        onSubmit={(name, pass) => fetchData({ name, pass })}
+        onSubmit={async (name, password) => {
+          if (!loading) {
+            const res = await fetch({ name, password });
+            if (res) {
+              console.log("success", { res });
+              dispatch(doLogin(res.name, res.token, res.code));
+              history.push("/");
+            }
+          }
+        }}
       />
     </div>
   );

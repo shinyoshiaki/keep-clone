@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { withRouter } from "react-router-dom";
-import SignupOrg from "../containers/organisms/signup";
+import LoginOrg from "../organisms/login";
 import { Button } from "@material-ui/core";
 import { History } from "history";
 
-const Signup: FunctionComponent<{ history: History }> = ({ history }) => {
+const Login: FunctionComponent<{ history: History }> = ({ history }) => {
   return (
     <div
       style={{
@@ -16,11 +16,11 @@ const Signup: FunctionComponent<{ history: History }> = ({ history }) => {
       }}
     >
       <div style={{ maxWidth: "90%" }}>
-        <SignupOrg />
-        <Button onClick={() => history.push("/login")}>login</Button>
+        <LoginOrg />
+        <Button onClick={() => history.push("/signup")}>sign up</Button>
       </div>
     </div>
   );
 };
 
-export default withRouter(Signup as any);
+export default withRouter(Login as any);

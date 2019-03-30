@@ -7,7 +7,8 @@ storiesOf("molecules", module).add("editModal", () => (
   <div style={{ height: "100vh" }}>
     <Component
       open={true}
-      onChange={action("")}
+      onEdited={action("")}
+      onClose={action("")}
       allTag={["test"]}
       initial={{ title: "title", text: "text", tag: ["tag"] }}
       menus={() => "menus"}

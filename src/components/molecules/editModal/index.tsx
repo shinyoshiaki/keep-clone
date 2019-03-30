@@ -1,14 +1,19 @@
 import React, { FunctionComponent } from "react";
 import { Modal } from "@material-ui/core";
-import EditMol, { EditInput } from "../edit";
+import EditMol, { Props as EditMolProps } from "../edit";
 
-const EditModalMol: FunctionComponent<{
+interface Props extends EditMolProps {
   open: boolean;
-  onChange: (v: EditInput) => void;
-  allTag: string[];
-  initial: { title: string; text: string; tag: string[] };
-  menus: () => any;
-}> = ({ open, initial, onChange, allTag, menus }) => {
+}
+
+const EditModalMol: FunctionComponent<Props> = ({
+  open,
+  initial,
+  onEdited,
+  allTag,
+  menus,
+  onClose
+}) => {
   return (
     <Modal open={open}>
       <div
@@ -21,12 +26,11 @@ const EditModalMol: FunctionComponent<{
       >
         <div style={{ width: 600, maxWidth: "90vw", backgroundColor: "white" }}>
           <EditMol
-            onClose={v => {
-              onChange(v);
-            }}
+            onEdited={onEdited}
             initial={initial}
             allTag={allTag}
             menus={menus}
+            onClose={onClose}
           />
         </div>
       </div>

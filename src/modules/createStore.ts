@@ -4,11 +4,10 @@ import {
   combineReducers
 } from "redux";
 import logger from "redux-logger";
-import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import main, { State } from "./main";
 import ui, { StateUi } from "./ui";
 import user, { StateUser } from "./user";
+import { persist } from "./middleware/persist";
 
 const rootReducer = combineReducers({
   main,
@@ -16,17 +15,12 @@ const rootReducer = combineReducers({
   user
 });
 
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["main"]
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 export default function createStore() {
-  const store = reduxCreateStore(persistedReducer, applyMiddleware(logger));
-  return { store, persistor: persistStore(store) };
+  const store = reduxCreateStore(
+    rootReducer,
+    applyMiddleware(logger, persist())
+  );
+  return { store };
 }
 
 export interface ReduxState {

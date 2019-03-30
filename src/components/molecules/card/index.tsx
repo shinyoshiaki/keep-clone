@@ -3,23 +3,17 @@ import useObject from "useobject";
 import { Star, MoreVert, Delete, More } from "@material-ui/icons";
 import { IconButton } from "@material-ui/core";
 import TagLabelAtom from "../../atoms/tagLabel";
-
-export interface Card {
-  hash: string;
-  title: string;
-  text: string;
-  tag: string[];
-}
+import { Post } from "../../../modules/main";
 
 const display = (open: boolean) => (open ? "" : "none");
 
 const CardMol: FunctionComponent<{
-  card: Card;
+  card: Post;
   onRemove: () => void;
-  modal: (open: boolean, close: () => void, card: Card) => any;
+  modal: (open: boolean, close: () => void, card: Post) => any;
 }> = ({ card, onRemove, modal }) => {
   const { state, setState } = useObject({ open: false, modal: false });
-  const { title, text, hash, tag } = card;
+  const { title, text, tag } = card;
 
   return (
     <div>

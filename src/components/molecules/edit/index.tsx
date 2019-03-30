@@ -18,12 +18,21 @@ const initialState = {
   editLabel: false
 };
 
-const EditMol: FunctionComponent<{
-  onClose: (input: EditInput) => void;
+export interface Props {
+  onEdited: (input: EditInput) => void;
+  onClose: () => void;
   menus?: () => any;
   allTag: string[];
   initial?: { title: string; text: string; tag: string[] };
-}> = ({ onClose, menus, initial, allTag }) => {
+}
+
+const EditMol: FunctionComponent<Props> = ({
+  onEdited,
+  menus,
+  initial,
+  allTag,
+  onClose
+}) => {
   const { state, setState } = useObject(initialState);
 
   useEffect(() => {
@@ -104,8 +113,11 @@ const EditMol: FunctionComponent<{
       <div style={{ gridArea: "close" }}>
         <Button
           onClick={() => {
-            onClose(state);
-            setState(initialState);
+            if (state.text.length > 0 || state.title.length > 0) {
+              onEdited(state);
+              setState(initialState);
+            }
+            onClose();
           }}
         >
           close
