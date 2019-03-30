@@ -5,11 +5,11 @@ import App from "./containers/pages/home";
 import * as serviceWorker from "./serviceWorker";
 import { HashRouter, Route } from "react-router-dom";
 import createStore from "./modules/createStore";
-import { PersistGate } from "redux-persist/integration/react";
 import Login from "./containers/pages/Login";
 import Signup from "./containers/pages/Signup";
 
 import { Client, setDefaultClient } from "micro-graphql-react";
+import { loadPersist } from "./modules/middleware/persist";
 
 const url =
   process.env.NODE_ENV === "production"
@@ -22,11 +22,13 @@ const client = new Client({
 
 setDefaultClient(client);
 
-const { store, persistor } = createStore();
+const { store } = createStore();
 
-ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate persistor={persistor}>
+async function main() {
+  // await loadPersist(store);
+
+  ReactDOM.render(
+    <Provider store={store}>
       <HashRouter>
         <div>
           <Route exact path="/" component={App} />
@@ -34,14 +36,16 @@ ReactDOM.render(
           <Route path="/signup" component={Signup} />
         </div>
       </HashRouter>
-    </PersistGate>
-  </Provider>,
-  document.getElementById("root")
-);
+    </Provider>,
+    document.getElementById("root")
+  );
 
-if (process.env.NODE_ENV === "production") {
-  //serviceWorker.register()
-  serviceWorker.unregister();
-} else {
-  serviceWorker.unregister();
+  if (process.env.NODE_ENV === "production") {
+    //serviceWorker.register()
+    serviceWorker.unregister();
+  } else {
+    serviceWorker.unregister();
+  }
 }
+
+main();

@@ -17,7 +17,7 @@ async function postApi(obj: NewMemo) {
               tag:${JSON.stringify(obj.tag)}
             }
           ) {
-            hash
+            time
             code
           }
         }

@@ -16,6 +16,7 @@ const signUpApi = async (obj: { name: string; password: string }) => {
       }" }) {
             code
             token
+            name
           }
         }
       `
