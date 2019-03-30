@@ -9,6 +9,7 @@ storiesOf("molecules", module).add("edit", () => (
       onEdited={action("story")}
       menus={() => <div>some</div>}
       allTag={["some"]}
+      onClose={action("story")}
     />
   </div>
 ));

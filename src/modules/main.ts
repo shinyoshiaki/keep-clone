@@ -3,7 +3,6 @@ export interface Post {
   title: string;
   text: string;
   tag: string[];
-  offline: boolean;
 }
 
 export interface State {

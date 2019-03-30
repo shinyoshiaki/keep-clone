@@ -18,12 +18,21 @@ const initialState = {
   editLabel: false
 };
 
-const EditMol: FunctionComponent<{
+export interface Props {
   onEdited: (input: EditInput) => void;
+  onClose: () => void;
   menus?: () => any;
   allTag: string[];
   initial?: { title: string; text: string; tag: string[] };
-}> = ({ onEdited, menus, initial, allTag }) => {
+}
+
+const EditMol: FunctionComponent<Props> = ({
+  onEdited,
+  menus,
+  initial,
+  allTag,
+  onClose
+}) => {
   const { state, setState } = useObject(initialState);
 
   useEffect(() => {
@@ -108,6 +117,7 @@ const EditMol: FunctionComponent<{
               onEdited(state);
               setState(initialState);
             }
+            onClose();
           }}
         >
           close

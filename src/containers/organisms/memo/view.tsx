@@ -23,6 +23,7 @@ const MemoView: FC<Props> = ({ onSubmit, allTag }) => {
           }}
           initial={{ title: "", text: "", tag: [] }}
           allTag={allTag}
+          onClose={() => setOpen(false)}
         />
       ) : (
         <div
