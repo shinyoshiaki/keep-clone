@@ -18,6 +18,7 @@ async function postApi(obj: NewMemo) {
             }
           ) {
             hash
+            code
           }
         }
       `
@@ -27,7 +28,8 @@ async function postApi(obj: NewMemo) {
   if (result.createMemo) {
     const memo = result.createMemo as Memo;
     return {
-      hash: memo.hash
+      time: memo.time,
+      code: memo.code
     };
   }
 

@@ -1,5 +1,6 @@
 export interface Post {
-  hash: string;
+  time: string;
+  code: string;
   title: string;
   text: string;
   tag: string[];
@@ -15,14 +16,14 @@ export const doPost = (post: Post) => {
   return { type: "MAIN_POST" as "MAIN_POST", payload: post };
 };
 
-export const doRemove = (hash: string) => {
-  return { type: "MAIN_REMOVE" as "MAIN_REMOVE", payload: hash };
+export const doRemove = (code: string) => {
+  return { type: "MAIN_REMOVE" as "MAIN_REMOVE", payload: code };
 };
 
-export const doChange = (post: Post, newHash?: string) => {
+export const doChange = (post: Post, newTime?: string) => {
   return {
     type: "MAIN_CHANGE" as "MAIN_CHANGE",
-    payload: { post, newHash }
+    payload: { post, newTime }
   };
 };
 
@@ -41,16 +42,16 @@ export default function reducer(state = initialState, action: Actions) {
       return {
         ...state,
         posts: state.posts.filter(v => {
-          if (v.hash !== action.payload) return v;
+          if (v.time !== action.payload) return v;
         })
       } as State;
     }
     case "MAIN_CHANGE": {
       const next = state.posts.map(post => {
-        if (post.hash === action.payload.post.hash) {
+        if (post.time === action.payload.post.time) {
           const post = action.payload.post;
-          if (action.payload.newHash) {
-            post.hash = action.payload.newHash;
+          if (action.payload.newTime) {
+            post.time = action.payload.newTime;
           }
           post.tag = post.tag.filter(v => v !== "");
           return post;

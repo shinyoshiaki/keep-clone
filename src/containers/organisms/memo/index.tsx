@@ -7,6 +7,7 @@ import { StateUser } from "../../../modules/user";
 import MemoView from "./view";
 import { useApi } from "../../../hooks/useApi";
 import PostApi from "../../../graphql/api/post";
+import moment from "moment";
 
 interface Props extends State, StateUser {
   dispatch: Dispatch<any>;
@@ -22,15 +23,19 @@ const MemoOrg: FunctionComponent<Props> = ({ dispatch, posts, session }) => {
 
   const onSubmit = async (title: string, text: string, tag: string[]) => {
     if (!loading) {
-      let hash = Math.random().toString();
+      let time = moment(Date.now())
+        .utc()
+        .unix()
+        .toString();
+      let code = Math.random().toString();
       if (session) {
         const res = await fetch({ title, text, token: session, tag });
-        console.log("MemoOrg", { res });
         if (res) {
-          hash = res.hash;
+          time = res.time;
+          code = res.code;
         }
       }
-      dispatch(doPost({ title, text, tag, hash }));
+      dispatch(doPost({ title, text, tag, time, code }));
     }
   };
 

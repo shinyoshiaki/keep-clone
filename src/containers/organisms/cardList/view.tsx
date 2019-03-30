@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Masonry from "react-masonry-component";
-import CardMol, { Card } from "../../../components/molecules/card";
+import CardMol from "../../../components/molecules/card";
 import EditModalMol from "../../../components/molecules/editModal";
 import { IconButton } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
@@ -26,7 +26,7 @@ const CardListView: FC<Props> = ({
     else return [] as string[];
   });
 
-  const visible = (card: Card) => {
+  const visible = (card: Post) => {
     if (searchWord.length > 0)
       if (card.text.includes(searchWord) || card.title.includes(searchWord)) {
         console.log(1, searchWord);
@@ -53,16 +53,17 @@ const CardListView: FC<Props> = ({
                 <div style={{ padding: 10 }}>
                   <CardMol
                     card={card}
-                    onRemove={() => onRemove(card.hash)}
+                    onRemove={() => onRemove(card.time)}
                     modal={(open, close, card) => {
-                      const { title, text, hash, tag } = card;
+                      const { title, text, time, tag, code } = card;
                       return (
                         <EditModalMol
                           open={open}
                           onEdited={v => {
                             const { title, text, tag } = v;
                             onChange({
-                              hash,
+                              code,
+                              time,
                               title,
                               text,
                               tag
@@ -76,7 +77,7 @@ const CardListView: FC<Props> = ({
                             <div>
                               <IconButton
                                 onClick={() => {
-                                  onRemove(card.hash);
+                                  onRemove(card.time);
                                   close();
                                 }}
                               >

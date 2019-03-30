@@ -13,10 +13,10 @@ input NewUser {
 type Memo {
   owner: String!
   code: String!
-  hash: String!
   title: String!
   text: String!
   tag: String!
+  time: String!
 }
 
 input NewMemo {

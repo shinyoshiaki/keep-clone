@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import App from "./pages/Home";
+import App from "./containers/pages/home";
 import * as serviceWorker from "./serviceWorker";
 import { HashRouter, Route } from "react-router-dom";
 import createStore from "./modules/createStore";
 import { PersistGate } from "redux-persist/integration/react";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Login from "./containers/pages/Login";
+import Signup from "./containers/pages/Signup";
 
 import { Client, setDefaultClient } from "micro-graphql-react";
 
@@ -38,10 +38,6 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
 
 if (process.env.NODE_ENV === "production") {
   //serviceWorker.register()
