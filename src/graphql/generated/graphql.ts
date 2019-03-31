@@ -12,6 +12,14 @@ export type AllMemo = {
   memos?: Maybe<Array<Memo>>;
 };
 
+export type EditMemo = {
+  token: Scalars["String"];
+  memoCode: Scalars["String"];
+  title: Scalars["String"];
+  text: Scalars["String"];
+  tag: Array<Scalars["String"]>;
+};
+
 export type GetAllMemo = {
   token: Scalars["String"];
 };
@@ -33,6 +41,7 @@ export type Memo = {
 export type Mutation = {
   createUser: User;
   createMemo: Memo;
+  editMemo: Memo;
 };
 
 export type MutationCreateUserArgs = {
@@ -41,6 +50,10 @@ export type MutationCreateUserArgs = {
 
 export type MutationCreateMemoArgs = {
   input: NewMemo;
+};
+
+export type MutationEditMemoArgs = {
+  input: EditMemo;
 };
 
 export type NewMemo = {

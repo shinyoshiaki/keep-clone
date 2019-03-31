@@ -8,20 +8,6 @@ import createStore from "./modules/createStore";
 import Login from "./containers/pages/Login";
 import Signup from "./containers/pages/Signup";
 
-import { Client, setDefaultClient } from "micro-graphql-react";
-import { loadPersist } from "./modules/middleware/persist";
-
-const url =
-  process.env.NODE_ENV === "production"
-    ? "https://echosome.tk:9443"
-    : "https://localhost:1333";
-
-const client = new Client({
-  endpoint: url + "/query"
-});
-
-setDefaultClient(client);
-
 const { store } = createStore();
 
 async function main() {
