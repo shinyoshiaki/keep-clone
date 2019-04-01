@@ -8,6 +8,7 @@ import CardListView from "./view";
 import { StateUser } from "../../../modules/user";
 import { useApi } from "../../../hooks/useApi";
 import editpostApi from "../../../graphql/api/editpost";
+import removepostApi from "../../../graphql/api/removepost";
 
 interface Props extends State, StateUi, StateUser {
   dispatch: Dispatch<any>;
@@ -20,15 +21,33 @@ const CardListOrg: FunctionComponent<Props> = ({
   searchWord,
   session
 }) => {
-  const { loading, fetch } = useApi(editpostApi);
+  const edit = useApi(editpostApi);
 
   const editMemo = async (changed: Post) => {
     if (session) {
-      if (!loading) {
-        await fetch({ memoCode: changed.code, token: session, ...changed });
+      if (!edit.loading) {
+        await edit.fetch({
+          memoCode: changed.code,
+          token: session,
+          ...changed
+        });
       }
     }
     dispatch(doChange(changed));
+  };
+
+  const remove = useApi(removepostApi);
+
+  const removeMemo = async (code: string) => {
+    if (session && !remove.loading) {
+      const res = await remove
+        .fetch({ memoCode: code, token: session })
+        .catch();
+      if (!res) {
+        console.log("network issue");
+      }
+    }
+    dispatch(doRemove(code));
   };
 
   return (
@@ -36,7 +55,7 @@ const CardListOrg: FunctionComponent<Props> = ({
       posts={posts}
       searchWord={searchWord}
       viewTag={viewTag}
-      onRemove={hash => dispatch(doRemove(hash))}
+      onRemove={removeMemo}
       onChange={editMemo}
     />
   );

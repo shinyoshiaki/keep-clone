@@ -7,6 +7,7 @@ import { HashRouter, Route } from "react-router-dom";
 import createStore from "./modules/createStore";
 import Login from "./containers/pages/Login";
 import Signup from "./containers/pages/Signup";
+import { loadPersist } from "./modules/middleware/persist";
 
 const { store } = createStore();
 

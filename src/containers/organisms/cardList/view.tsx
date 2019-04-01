@@ -10,7 +10,7 @@ export interface Props {
   posts: Post[];
   searchWord: string;
   viewTag: string;
-  onRemove: (hash: string) => void;
+  onRemove: (code: string) => void;
   onChange: (changed: Post) => void;
 }
 
@@ -53,7 +53,7 @@ const CardListView: FC<Props> = ({
                 <div style={{ padding: 10 }}>
                   <CardMol
                     card={card}
-                    onRemove={() => onRemove(card.time)}
+                    onRemove={() => onRemove(card.code)}
                     modal={(open, close, card) => {
                       const { title, text, time, tag, code } = card;
                       return (
@@ -77,7 +77,7 @@ const CardListView: FC<Props> = ({
                             <div>
                               <IconButton
                                 onClick={() => {
-                                  onRemove(card.time);
+                                  onRemove(card.code);
                                   close();
                                 }}
                               >

@@ -12,8 +12,8 @@ async function editpostApi(obj: EditMemo) {
         mutation EditMemo {
           editMemo(
             input: {
-              memoCode: "${obj.memoCode}"
               token: "${obj.token}"
+              memoCode: "${obj.memoCode}"
               title: "${obj.title}"
               text: "${obj.text}"
               tag: ${JSON.stringify(obj.tag)}
@@ -26,7 +26,7 @@ async function editpostApi(obj: EditMemo) {
     )
     .catch();
 
-  if (result.editMemo) {
+  if (result && result.editMemo) {
     const memo = result.editMemo as Memo;
     return {
       time: memo.time

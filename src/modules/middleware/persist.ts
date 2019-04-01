@@ -12,14 +12,11 @@ export const persist = () => {
     const returnValue = next(action);
 
     for (let key of Object.keys(getState())) {
-      console.log({ key });
       keyList[key] = true;
       await localforage.setItem(key, JSON.stringify(getState()[key]));
     }
 
     await localforage.setItem("root", JSON.stringify(keyList));
-
-    console.log({ returnValue }, getState());
 
     return returnValue;
   };

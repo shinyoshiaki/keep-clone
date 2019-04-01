@@ -42,7 +42,7 @@ export default function reducer(state = initialState, action: Actions) {
       return {
         ...state,
         posts: state.posts.filter(v => {
-          if (v.time !== action.payload) return v;
+          if (v.code !== action.payload) return v;
         })
       } as State;
     }

@@ -12,6 +12,10 @@ export type AllMemo = {
   memos?: Maybe<Array<Memo>>;
 };
 
+export type Auth = {
+  token: Scalars["String"];
+};
+
 export type EditMemo = {
   token: Scalars["String"];
   memoCode: Scalars["String"];
@@ -42,6 +46,7 @@ export type Mutation = {
   createUser: User;
   createMemo: Memo;
   editMemo: Memo;
+  removeMemo: Memo;
 };
 
 export type MutationCreateUserArgs = {
@@ -54,6 +59,10 @@ export type MutationCreateMemoArgs = {
 
 export type MutationEditMemoArgs = {
   input: EditMemo;
+};
+
+export type MutationRemoveMemoArgs = {
+  input: RemoveMemo;
 };
 
 export type NewMemo = {
@@ -71,6 +80,7 @@ export type NewUser = {
 export type Query = {
   getUser?: Maybe<User>;
   getAllMemo?: Maybe<AllMemo>;
+  auth?: Maybe<Scalars["String"]>;
 };
 
 export type QueryGetUserArgs = {
@@ -79,6 +89,15 @@ export type QueryGetUserArgs = {
 
 export type QueryGetAllMemoArgs = {
   input: GetAllMemo;
+};
+
+export type QueryAuthArgs = {
+  input: Auth;
+};
+
+export type RemoveMemo = {
+  token: Scalars["String"];
+  memoCode: Scalars["String"];
 };
 
 export type User = {

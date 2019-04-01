@@ -34,10 +34,16 @@ input EditMemo {
   tag: [String!]!
 }
 
+input RemoveMemo {
+  token: String!
+  memoCode: String!
+}
+
 type Mutation {
   createUser(input: NewUser!): User!
   createMemo(input: NewMemo!): Memo!
   editMemo(input: EditMemo!): Memo!
+  removeMemo(input: RemoveMemo!): Memo!
 }
 
 input GetUser {
@@ -53,7 +59,12 @@ type AllMemo {
   memos: [Memo!]
 }
 
+input Auth {
+  token: String!
+}
+
 type Query {
   getUser(input: GetUser!): User
   getAllMemo(input: GetAllMemo!): AllMemo
+  auth(input: Auth!): String
 }
