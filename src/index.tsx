@@ -12,7 +12,7 @@ import { loadPersist } from "./modules/middleware/persist";
 const { store } = createStore();
 
 async function main() {
-  // await loadPersist(store);
+  await loadPersist(store);
 
   ReactDOM.render(
     <Provider store={store}>

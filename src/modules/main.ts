@@ -13,16 +13,16 @@ export interface State {
 const initialState: State = { posts: [] };
 
 export const doPost = (post: Post) => {
-  return { type: "MAIN_POST" as "MAIN_POST", payload: post };
+  return { type: "MAIN_POST" as const, payload: post };
 };
 
 export const doRemove = (code: string) => {
-  return { type: "MAIN_REMOVE" as "MAIN_REMOVE", payload: code };
+  return { type: "MAIN_REMOVE" as const, payload: code };
 };
 
 export const doChange = (post: Post, newTime?: string) => {
   return {
-    type: "MAIN_CHANGE" as "MAIN_CHANGE",
+    type: "MAIN_CHANGE" as const,
     payload: { post, newTime }
   };
 };

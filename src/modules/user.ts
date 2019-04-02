@@ -7,7 +7,7 @@ export interface StateUser {
 const initialState: StateUser = {};
 
 export const doLogin = (name: string, session: string, code: string) => {
-  const type = "UI_LOGIN" as "UI_LOGIN";
+  const type = "UI_LOGIN" as const;
   return { type, payload: { name, session, code } };
 };
 
