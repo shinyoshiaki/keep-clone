@@ -60,14 +60,14 @@ const CardListView: FC<Props> = ({
                       onRemove={() => onRemove(card.code)}
                       modal={(open, close, card) => {
                         const { title, text, tag, code } = card;
-                        const time = moment(Date.now())
-                          .utc()
-                          .unix()
-                          .toString();
                         return (
                           <EditModalMol
                             open={open}
                             onEdited={v => {
+                              const time = moment(Date.now())
+                                .utc()
+                                .unix()
+                                .toString();
                               const { title, text, tag } = v;
                               onChange({
                                 code,
