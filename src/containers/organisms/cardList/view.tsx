@@ -48,8 +48,7 @@ const CardListView: FC<Props> = ({
     <div style={{ display: "flex", justifyContent: "center" }}>
       <Masonry options={{ fitWidth: true, columnWidth: 350 }}>
         {posts
-          .sort((a, b) => Number(a.time) - Number(b.time))
-          .reverse()
+          .sort((a, b) => Number(b.time) - Number(a.time))
           .map((card, i) => {
             if (visible(card))
               return (
