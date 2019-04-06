@@ -5,6 +5,7 @@ import EditModalMol from "../../../components/molecules/editModal";
 import { IconButton } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
 import { Post } from "../../../modules/main";
+import moment from "moment";
 
 export interface Props {
   posts: Post[];
@@ -46,53 +47,60 @@ const CardListView: FC<Props> = ({
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <Masonry options={{ fitWidth: true, columnWidth: 350 }}>
-        {posts.map((card, i) => {
-          if (visible(card))
-            return (
-              <div style={{ width: 350, maxWidth: "90vw" }} key={i}>
-                <div style={{ padding: 10 }}>
-                  <CardMol
-                    card={card}
-                    onRemove={() => onRemove(card.code)}
-                    modal={(open, close, card) => {
-                      const { title, text, time, tag, code } = card;
-                      return (
-                        <EditModalMol
-                          open={open}
-                          onEdited={v => {
-                            const { title, text, tag } = v;
-                            onChange({
-                              code,
-                              time,
-                              title,
-                              text,
-                              tag
-                            });
-                            close();
-                          }}
-                          onClose={() => close()}
-                          initial={{ title, text, tag }}
-                          allTag={allTag}
-                          menus={() => (
-                            <div>
-                              <IconButton
-                                onClick={() => {
-                                  onRemove(card.code);
-                                  close();
-                                }}
-                              >
-                                <Delete />
-                              </IconButton>
-                            </div>
-                          )}
-                        />
-                      );
-                    }}
-                  />
+        {posts
+          .sort((a, b) => Number(a.time) - Number(b.time))
+          .reverse()
+          .map((card, i) => {
+            if (visible(card))
+              return (
+                <div style={{ width: 350, maxWidth: "90vw" }} key={i}>
+                  <div style={{ padding: 10 }}>
+                    <CardMol
+                      card={card}
+                      onRemove={() => onRemove(card.code)}
+                      modal={(open, close, card) => {
+                        const { title, text, tag, code } = card;
+                        const time = moment(Date.now())
+                          .utc()
+                          .unix()
+                          .toString();
+                        return (
+                          <EditModalMol
+                            open={open}
+                            onEdited={v => {
+                              const { title, text, tag } = v;
+                              onChange({
+                                code,
+                                time,
+                                title,
+                                text,
+                                tag
+                              });
+                              close();
+                            }}
+                            onClose={() => close()}
+                            initial={{ title, text, tag }}
+                            allTag={allTag}
+                            menus={() => (
+                              <div>
+                                <IconButton
+                                  onClick={() => {
+                                    onRemove(card.code);
+                                    close();
+                                  }}
+                                >
+                                  <Delete />
+                                </IconButton>
+                              </div>
+                            )}
+                          />
+                        );
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
-            );
-        })}
+              );
+          })}
       </Masonry>
     </div>
   );

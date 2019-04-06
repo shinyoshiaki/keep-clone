@@ -26,11 +26,16 @@ const CardListOrg: FunctionComponent<Props> = ({
   const editMemo = async (changed: Post) => {
     if (session) {
       if (!edit.loading) {
-        await edit.fetch({
-          memoCode: changed.code,
-          token: session,
-          ...changed
-        });
+        const res = await edit
+          .fetch({
+            memoCode: changed.code,
+            token: session,
+            ...changed
+          })
+          .catch();
+        if (res) {
+          changed.time = res.time;
+        }
       }
     }
     dispatch(doChange(changed));

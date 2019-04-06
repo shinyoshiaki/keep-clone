@@ -20,10 +20,10 @@ export const doRemove = (code: string) => {
   return { type: "MAIN_REMOVE" as const, payload: code };
 };
 
-export const doChange = (post: Post, newTime?: string) => {
+export const doChange = (post: Post) => {
   return {
     type: "MAIN_CHANGE" as const,
-    payload: { post, newTime }
+    payload: post
   };
 };
 
@@ -48,15 +48,11 @@ export default function reducer(state = initialState, action: Actions) {
     }
     case "MAIN_CHANGE": {
       const next = state.posts.map(post => {
-        if (post.time === action.payload.post.time) {
-          const post = action.payload.post;
-          if (action.payload.newTime) {
-            post.time = action.payload.newTime;
-          }
-          post.tag = post.tag.filter(v => v !== "");
-          return post;
+        if (post.code === action.payload.code) {
+          return action.payload;
         } else return post;
       });
+
       return { ...state, posts: next } as State;
     }
 

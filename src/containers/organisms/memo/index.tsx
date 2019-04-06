@@ -14,7 +14,7 @@ interface Props extends State, StateUser {
 }
 
 const MemoOrg: FunctionComponent<Props> = ({ dispatch, posts, session }) => {
-  const { loading, fetch, error } = useApi(PostApi);
+  const { loading, fetch } = useApi(PostApi);
 
   const allTag: string[] = posts.flatMap(post => {
     if (post.tag.length > 0) return post.tag;
@@ -29,12 +29,13 @@ const MemoOrg: FunctionComponent<Props> = ({ dispatch, posts, session }) => {
         .toString();
       let code = Math.random().toString();
       if (session) {
-        const res = await fetch({ title, text, token: session, tag });
+        const res = await fetch({ title, text, token: session, tag }).catch();
         if (res) {
           time = res.time;
           code = res.code;
         }
       }
+
       dispatch(doPost({ title, text, tag, time, code }));
     }
   };
