@@ -13,14 +13,12 @@ async function allPostApi(obj: GetAllMemo) {
           getAllMemo(
             input: { token: "${obj.token}" }
           ) {
-            memos {
-              owner
-              code
-              title
-              time
-              text
-              tag
-            }
+            owner
+            code
+            title
+            time
+            text
+            tag
           }
         }
       `

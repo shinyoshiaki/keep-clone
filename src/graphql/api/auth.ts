@@ -1,37 +1,26 @@
 import gql from "graphql-tag";
 import GraphQLClient from "../client";
 
-class AuthWebApi {
-  private graphqlClient: GraphQLClient = new GraphQLClient();
+const graphqlClient: GraphQLClient = new GraphQLClient();
 
-  getMe = async (obj: { token: string }) => {
-    let result: any;
+export default async function AuthApi(obj: { token: string }) {
+  const result = await graphqlClient
+    .query(
+      gql`
+      query auth {
+        auth(input: {
+            token:"${obj.token}"
+        })
+      }
+    `
+    )
+    .catch();
 
-    try {
-      result = await this.graphqlClient.query(
-        gql`
-          query auth {
-            auth(input: {
-                token:"${obj.token}"         
-            }) {
-              msg
-            }
-          }
-        `
-      );
-    } catch (err) {
-      throw err;
-    }
+  const { auth } = result;
 
-    if (result.auth) {
-      const user = result.auth as String;
-      return {
-        msg: user
-      };
-    }
+  if (auth) {
+    return auth as string;
+  }
 
-    return undefined;
-  };
+  return undefined;
 }
-
-export default AuthWebApi;
