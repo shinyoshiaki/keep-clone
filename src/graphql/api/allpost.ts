@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import GraphQLClient from "../client";
-import { Memo, GetAllMemo, AllMemo } from "../generated/graphql";
+import { Memo, GetAllMemo } from "../generated/graphql";
 import { Post } from "../../modules/main";
 
 const graphqlClient: GraphQLClient = new GraphQLClient();
@@ -25,10 +25,11 @@ async function allPostApi(obj: GetAllMemo) {
     )
     .catch();
 
-  if (result.getAllMemo) {
-    const res = result.getAllMemo as AllMemo;
-    return res.memos
-      ? ((res.memos.map(memo => {
+  const { getAllMemo } = result;
+  if (getAllMemo) {
+    const res = getAllMemo as Memo[];
+    return res
+      ? ((res.map(memo => {
           memo.tag = memo.tag.split(",") as any;
           return memo;
         }) as any) as Post[])

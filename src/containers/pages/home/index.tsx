@@ -41,6 +41,7 @@ const Home: FunctionComponent<Props> = ({
 
       if (!loading) {
         const memos = await fetch({ token: session }).catch();
+        console.log({ memos });
         if (memos) {
           upload(memos);
 

@@ -8,10 +8,6 @@ export type Scalars = {
   Float: number;
 };
 
-export type AllMemo = {
-  memos?: Maybe<Array<Memo>>;
-};
-
 export type Auth = {
   token: Scalars["String"];
 };
@@ -79,7 +75,7 @@ export type NewUser = {
 
 export type Query = {
   getUser?: Maybe<User>;
-  getAllMemo?: Maybe<AllMemo>;
+  getAllMemo?: Maybe<Array<Memo>>;
   auth?: Maybe<Scalars["String"]>;
 };
 
