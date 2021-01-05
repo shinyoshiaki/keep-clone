@@ -16,7 +16,7 @@
     "apollo-link": "^1.2.11",
     "apollo-link-batch-http": "^1.2.11",
     "apollo-link-http": "^1.5.14",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "emotion": "^10.0.6",
     "graphql": "^14.2.0",
     "history": "^4.7.2",
